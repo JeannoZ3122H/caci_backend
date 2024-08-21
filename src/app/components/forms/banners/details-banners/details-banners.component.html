@@ -1,0 +1,49 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'"
+        [color]="'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important">
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            Détails de la bannière publicitaire Nº<b>{{ item_data.id }}</b>
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="px-1 overflow-hidden overflow-y-scroll mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+
+            <div class="card">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img class="img-fluid h-100 rounded-start" [src]="item_data.event_img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ item_data.title }}</h4>
+                            <p class="card-text">
+                                {{ item_data.description }}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Lien:
+                                    <a [href]="item_data.url" target="_blank" class="fst-italic">{{ item_data.url }}</a>
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">Mise à jour le
+                                    <b class="fst-italic">{{ item_data.created_at | date: 'dd MMMM yyyy' }}</b>
+                                </small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+</div>

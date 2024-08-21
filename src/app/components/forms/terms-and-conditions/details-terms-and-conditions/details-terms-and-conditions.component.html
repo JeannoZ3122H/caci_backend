@@ -1,0 +1,23 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="'warn'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            Politique de confidentialités
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+<div mat-dialog-content class="px-1 pt-3 mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <div class="text-justify">
+                <div class="text-justify" [innerHTML]=""></div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

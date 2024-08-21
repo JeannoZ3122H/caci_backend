@@ -1,0 +1,8 @@
+.mat__btn__closing{
+    content: '';
+    position: absolute;
+    top: -5px !important;
+    right: -5px !important;
+    z-index: 99
+}
+

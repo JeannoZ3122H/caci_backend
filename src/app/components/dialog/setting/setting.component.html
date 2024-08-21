@@ -1,0 +1,58 @@
+<mat-card class="mat__custumer__card__bg">
+    <mat-card-content>
+        <div class="setting-panel-item">
+            <h3 class="setting-panel-item-title">Theme</h3>
+            <div class="row gx-2">
+                <div class="col-6">
+                    <input class="btn-check" id="navbarDark" (change)="changeTheme($event.target)"
+                    name="theme" type="radio" [checked]="theme == 'dark'" value="dark"/>
+                    <label class="btn d-inline-block btn-navbar-style fs-9" for="navbarDark">
+                        <span class="rounded d-block">
+                            <img class="img-fluid img-prototype" [src]="theme_dark_img"
+                                alt />
+                        </span>
+                        <span class="label-text">Sombre</span>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <input class="btn-check" id="navbarLight" name="theme" (change)="changeTheme($event.target)" type="radio"
+                    [checked]="theme == 'light'" value="light" />
+                    <label class="btn d-inline-block btn-navbar-style fs-9" for="navbarLight">
+                        <span class="rounded d-block">
+                            <img class="img-fluid img-prototype" [src]="theme_light_img"
+                            alt />
+                        </span>
+                        <span class="label-text">
+                            Claire
+                        </span>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <input class="btn-check" id="navbarAuto" name="theme" type="radio"
+                    [checked]="theme == 'default'" value="default"/>
+                        <label class="btn d-inline-block btn-navbar-style fs-9" for="navbarAuto">
+                            <span class="rounded d-block">
+                                <img class="img-fluid img-prototype" [src]="theme_light_img" alt />
+                            </span>
+                            <span class="label-text">
+                            Défaut
+                        </span>
+                    </label>
+                </div>
+                <div class="col-6">
+                    <input class="btn-check" id="navbarPositionTopDouble" name="navigation-type" type="radio"
+                    [checked]="theme == 'auto'" value="auto" />
+                    <label class="btn d-inline-block btn-navbar-style fs-9" for="navbarPositionTopDouble">
+                        <span class="rounded d-block">
+                            <img class="img-fluid img-prototype" [src]="theme_auto_img"
+                            alt />
+                        </span>
+                        <span class="label-text">
+                            Auto
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

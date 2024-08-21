@@ -1,0 +1,100 @@
+
+<main class="main" id="top">
+<div class="px-3">
+    <div class="row min-vh-100 flex-center p-5">
+        <div class="col-12 col-xl-10 col-xxl-8">
+            <div class="row justify-content-center align-items-center g-5">
+                <div class="col-12 col-lg-6 text-center order-lg-1">
+                    <img class="img-fluid w-lg-100 d-dark-none" src="assets/img/spot-illustrations/404-illustration.png" alt="" width="400" />
+                    <img class="img-fluid w-md-50 w-lg-100 d-light-none"  src="assets/img/spot-illustrations/dark_404-illustration.png" alt="" width="540" />
+                </div>
+                <div class="col-12 col-lg-6 text-center text-lg-start">
+                    <img class="img-fluid mb-6 w-50 w-lg-75 d-dark-none" src="assets/img/spot-illustrations/404.png" alt="" />
+                    <img class="img-fluid mb-6 w-50 w-lg-75 d-light-none" src="assets/img/spot-illustrations/dark_404.png" alt="" />
+                    <h2 class="text-body-secondary fw-bolder mb-3">Page non trouvée</h2>
+                    <p class="text-body mb-5">
+                        Mais pas de soucis ! Notre autruche cherche partout.
+                        <br class="d-none d-sm-block" />
+                        pendant que vous attendez en toute sécurité.
+                    </p>
+                    <button class="btn btn-md btn-primary" role="button" (click)="goToBack()">
+                        <i class="fa fa-reply-all me-2"></i>
+                        Retour
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="support-chat-container show">
+    <div class="container-fluid support-chat">
+        <div class="card bg-body-emphasis">
+            <div class="card-header d-flex flex-between-center px-4 py-3 border-bottom border-translucent">
+                <h5 class="mb-0 d-flex align-items-center gap-2">
+                    Rapport <span class="uil uil-circle text-success fs-11"></span>
+                </h5>
+            </div>
+            <div class="card-body chat p-0">
+                <div class="d-flex flex-column-reverse scrollbar h-100 p-3">
+                    <div class="text-end mt-6">
+                        <div class="mb-2 d-inline-flex align-items-center
+                        text-decoration-none text-body-emphasis bg-body-hover rounded-pill border border-primary py-2 ps-4 pe-3">
+                            <p class="mb-0 fw-semibold fs-9">I need help with something</p>
+                            <span class="uil uil-navigator text-primary fs-9 ms-3"></span>
+                        </div>
+                        <div class="mb-2 d-inline-flex align-items-center
+                        text-decoration-none text-body-emphasis bg-body-hover rounded-pill border border-primary py-2 ps-4 pe-3">
+
+                            <p class="mb-0 fw-semibold fs-9">I can’t reorder a product I previously ordered</p>
+                            <span class="uil uil-navigator text-primary fs-9 ms-3"></span>
+                        </div>
+                        <div class="mb-2 d-inline-flex align-items-center
+                        text-decoration-none text-body-emphasis bg-body-hover rounded-pill border border-primary py-2 ps-4 pe-3">
+
+                            <p class="mb-0 fw-semibold fs-9">How do I place an order?</p>
+                            <span class="uil uil-navigator text-primary fs-9 ms-3"></span>
+                        </div>
+                        <div class="mb-2 d-inline-flex align-items-center
+                        text-decoration-none text-body-emphasis bg-body-hover rounded-pill border border-primary py-2 ps-4 pe-3">
+
+                            <p class="mb-0 fw-semibold fs-9">My payment method not working</p>
+                            <span class="uil uil-navigator text-primary fs-9 ms-3"></span>
+                        </div>
+                    </div>
+                    <div class="text-center mt-auto">
+                        <div class="avatar avatar-3xl status-online">
+                            <img class="rounded-circle border border-3 border-light-subtle" src="assets/img/team/30.webp" alt="" />
+                        </div>
+                        <h5 class="mt-2 mb-3">Eric</h5>
+                        <p class="text-center text-body-emphasis mb-0">
+                            Ask us anything – we’ll get back to you here
+                            or by email within 24
+                            hours.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer d-flex align-items-center gap-2 border-top border-translucent ps-3 pe-4 py-3">
+                <div class="d-flex align-items-center flex-1 gap-3 border border-translucent rounded-pill px-4">
+                    <input class="form-control outline-none border-0 flex-1 fs-9 px-0" type="text" placeholder="Write message"/>
+                        <label class="btn btn-link d-flex p-0 text-body-quaternary fs-9 border-0" for="supportChatPhotos">
+                            <span class="uil-image uil"></span>
+                        </label>
+                    <input class="d-none" type="file" accept="image/*" id="supportChatPhotos" />
+                    <label class="btn btn-link d-flex p-0 text-body-quaternary fs-9 border-0" for="supportChatAttachment">
+                        <span class="uil-link-alt uil"></span>
+                    </label>
+                    <input class="d-none" type="file" id="supportChatAttachment" />
+                </div>
+                <button class="btn p-0 border-0 send-btn">
+                    <span class="uil-navigator uil fs-9"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <button mat-fab extended color="warn" class="btn btn-support-chat p-0 border border-translucent">
+        <mat-icon color="primary">sms</mat-icon>
+        <span class="fs-8 btn-text text-primary text-nowrap">Support</span>
+    </button>
+</div>
+</main>

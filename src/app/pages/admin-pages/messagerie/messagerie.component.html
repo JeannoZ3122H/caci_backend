@@ -1,0 +1,265 @@
+<mat-card class="mat__custumer__card__bg py-1 mb-3">
+    <mat-card-content class="my-0 py-1">
+        <div class="d-flex align-items-center justify-content-between my-0">
+            <div class="ms-3" id="bulk-select-actions">
+                <h2 class="text-uppercase fw-bold mb-0">
+                    <svg width="40px" height="40px" class="text__theme" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                        <g id="SVGRepo_iconCarrier"> <path d="M22 5C22 6.65685 20.6569 8 19 8C17.3431 8 16 6.65685 16 5C16 3.34315 17.3431 2 19 2C20.6569 2 22 3.34315 22 5Z" fill="#1C274C"/> <path opacity="0.5" d="M15.6361 2.01096C15.0111 2 14.3051 2 13.5 2H10.5C7.22657 2 5.58985 2 4.38751 2.7368C3.71473 3.14908 3.14908 3.71473 2.7368 4.38751C2 5.58985 2 7.22657 2 10.5V11.5C2 13.8297 2 14.9946 2.3806 15.9134C2.88807 17.1386 3.86144 18.1119 5.08658 18.6194C5.74689 18.8929 6.53422 18.9698 7.78958 18.9915C8.63992 19.0061 9.06509 19.0134 9.40279 19.2098C9.74049 19.4063 9.95073 19.7614 10.3712 20.4718L10.9133 21.3877C11.3965 22.204 12.6035 22.204 13.0867 21.3877L13.6288 20.4718C14.0492 19.7614 14.2595 19.4062 14.5972 19.2098C14.9349 19.0134 15.36 19.0061 16.2104 18.9915C17.4658 18.9698 18.2531 18.8929 18.9134 18.6194C20.1386 18.1119 21.1119 17.1386 21.6194 15.9134C22 14.9946 22 13.8297 22 11.5V10.5C22 9.69494 22 8.98889 21.989 8.36394C21.1942 9.07068 20.1473 9.5 19 9.5C16.5147 9.5 14.5 7.48528 14.5 5C14.5 3.85275 14.9293 2.80577 15.6361 2.01096Z" fill="#1C274C"/> </g>
+                    </svg>
+                    Liste des messages
+                </h2>
+            </div>
+            <div id="bulk-select-replace-element" class>
+                <button (click)="addNewItem()" mat-fab extended color="primary" class="btn btn-phoenix-success btn-sm" type="button">
+                    <svg class="svg-inline--fa fa-plus" role="img"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                        style="transform-origin: 0.4375em 0.625em;">
+                        <g transform="translate(224 256)">
+                            <g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)">
+                                <path fill="currentColor"
+                                    d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+                                    transform="translate(-224 -256)">
+                                </path>
+                            </g>
+                        </g>
+                    </svg>
+                    <span class="ms-1">Ajouter</span>
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
+<div class="mat__custumer__container__bg mb-2">
+    <div id="tableExample">
+        <mat-card class="mat__custumer__container__bg">
+            <div>
+
+                @if(list_message.length > 0){
+                    <div class="row d-lg-flex d-none flex-between-center pt-3 mb-2">
+                        <div class="col-lg-3 col-12">
+                            <nav class="" style="margin-left: 2.7rem !important">
+                                <ul class="d-flex pagination mb-0">
+                                    <li class="page-item me-1">
+                                        <a class="page-link px-1" role="button">
+                                            <input style="width: 1rem !important; height: 1rem !important"
+                                            class="form-check-input" type="checkbox">
+                                            <span class="span ms-2">
+                                                <i class="uil fs-8 uil-angle-down"></i>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item me-1">
+                                        <a class="page-link px-1" role="button">
+                                            <i class="uil fs-8 uil-history"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item ms-1">
+                                        <a class="page-link px-1" role="button">
+                                            <i class="uil fs-8 uil-ellipsis-v"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <div class="col-lg-6 col-12 d-flex justify-content-end">
+                            <nav>
+                                <ul class="pagination mb-0">
+                                    <li class="page-item">
+                                        <a class="page-link" role="button">
+                                            <b class="">1</b>
+                                            -
+                                            <b class="">2</b>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination mb-0">
+                                    <li class="page-item me-1">
+                                        <a class="page-link" role="button">
+                                            <svg class="svg-inline--fa fa-chevron-left" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                                                <path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                    <li class="page-item ms-1">
+                                        <a class="page-link" role="button">
+                                            <svg class="svg-inline--fa fa-chevron-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="chevron-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                                                <path fill="currentColor" d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"></path>
+                                            </svg>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                }
+
+                @if(list_message.length > 0){
+                    <div class="text-end mt-3">
+                        <pagination-controls
+                        [responsive]="true"
+                        previousLabel="Précédent"
+                        nextLabel="Suivant"
+                        (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                }
+            </div>
+            <mat-divider></mat-divider>
+            <mat-card-content>
+                <mat-tab-group animationDuration="0ms">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon me-3">mark_unread_chat_alt</mat-icon>
+                            Repertoire
+                        </ng-template>
+
+                        <div class="table-responsive mx-n1 px-1">
+                            <table cdkDropListGroup class="table table-striped table-sm border-top border-translucent fs-9 mb-0">
+                                <tbody class="" id="bulk-select-body" cdkDropList (cdkDropListDropped)="drop($event)">
+                                    @for (sms of list_message | paginate: { id: 'received', itemsPerPage: 10, currentPage: p }; track $index) {
+                                        <tr cdkDrag class="bloc-text-hover">
+                                            <td style="max-width: max-content !important" class="fs-9 align-middle px-1">
+                                                <div class="mb-0 fs-8">
+                                                    <span class="span me-2" cdkDragHandle>
+                                                        <mat-icon style="cursor: pointer !important"
+                                                        class="text__theme">drag_indicator</mat-icon>
+                                                    </span>
+
+                                                    <span class="span me-2">
+                                                        <input class="form-check-input" type="checkbox">
+                                                    </span>
+
+                                                    <span class="span me-2">
+
+                                                        <i style="cursor: pointer !important"
+                                                        class="text__theme uil uil-envelope-star"></i>
+
+                                                        <i style="cursor: pointer !important"
+                                                        class="text__theme uil uil-star"></i>
+
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td class="fs-9 align-middle px-1" style="max-width: max-content !important">
+                                                {{ sms.sender }}
+                                            </td>
+                                            <td class="align-middle ps-3 name" [innerHTML]="sms.content"></td>
+                                            <td class="align-middle white-space-nowrap text-center pe-0">
+                                                <button class="shadow-none bg-transparent" [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
+                                                    <mat-icon class="text__theme">more_vert</mat-icon>
+                                                </button>
+                                                <mat-menu #menuAction="matMenu" xPosition="before">
+                                                    <li mat-menu-item class="action__mat__list__item">
+                                                        <button (click)="editCurrentItem(sms)" mat-button class="action__mat__list__item__button">
+                                                            <mat-icon class="text__theme">preview</mat-icon> <span class="ms-2 text__theme">Voir</span>
+                                                        </button>
+                                                    </li>
+                                                    <li mat-menu-item class="action__mat__list__item">
+                                                        <button mat-button class="action__mat__list__item__button">
+                                                            <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
+                                                        </button>
+                                                    </li>
+                                                </mat-menu>
+                                            </td>
+                                        </tr>
+                                    }@empty {
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                <mat-card class="shadow-none mat__custumer__card__bg">
+                                                    <mat-card-content>
+                                                        <svg width="50px" height="50px" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M18.364 18.364C19.9926 16.7353 21 14.4853 21 12C21 7.02944 16.9706 3 12 3C9.51472 3 7.26472 4.00736 5.63604 5.63604M18.364 18.364C16.7353 19.9926 14.4853 21 12 21C7.02944 21 3 16.9706 3 12C3 9.51472 4.00736 7.26472 5.63604 5.63604M18.364 18.364L5.63604 5.63604"
+                                                            stroke="#fb3b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                        <span class="text-danger fw-bolder">Aucun élément trouvé</span>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab>
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon me-3">chat</mat-icon>
+                            Messages envoyés
+                        </ng-template>
+
+                        <div class="table-responsive mx-n1 px-1">
+                            <table class="table table-sm border-top border-translucent fs-9 mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="white-space-nowrap ps-2 fs-9 align-middle ps-0" style="max-width:20px; width:18px;">
+                                            <div class="form-check mb-0 fs-8">
+                                                <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                            </div>
+                                        </th>
+                                        <th class="sort align-middle ps-3" data-sort="name">#ID</th>
+                                        <th class="sort align-middle" data-sort="email">Rôle</th>
+                                        <th class="sort text-center align-middle pe-0" scope="col">ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="" id="bulk-select-body">
+
+                                    @for (role of list_message | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                                        <tr>
+                                            <td class="fs-9 align-middle ps-2">
+                                                <div class="form-check mb-0 fs-8">
+                                                    <input class="form-check-input" type="checkbox">
+                                                </div>
+                                            </td>
+                                            <td class="align-middle ps-3 name">role.id</td>
+                                            <td class="align-middle ps-3 name">role.role</td>
+                                            <td class="align-middle white-space-nowrap text-center pe-0">
+                                                <button [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
+                                                    <mat-icon class="text__theme">more_horiz</mat-icon>
+                                                </button>
+                                                <mat-menu #menuAction="matMenu" xPosition="before">
+                                                    <li mat-menu-item class="action__mat__list__item">
+                                                        <button (click)="editCurrentItem(role)" mat-button class="action__mat__list__item__button">
+                                                            <mat-icon class="text__theme">edit</mat-icon> <span class="ms-2 text__theme">Modifier</span>
+                                                        </button>
+                                                    </li>
+                                                    <li mat-menu-item class="action__mat__list__item">
+                                                        <button mat-button class="action__mat__list__item__button">
+                                                            <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
+                                                        </button>
+                                                    </li>
+                                                </mat-menu>
+                                            </td>
+                                        </tr>
+                                    }@empty {
+                                        <tr>
+                                            <td colspan="5" class="text-center">
+                                                <mat-card class="shadow-none mat__custumer__card__bg">
+                                                    <mat-card-content>
+                                                        <svg width="50px" height="50px" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M18.364 18.364C19.9926 16.7353 21 14.4853 21 12C21 7.02944 16.9706 3 12 3C9.51472 3 7.26472 4.00736 5.63604 5.63604M18.364 18.364C16.7353 19.9926 14.4853 21 12 21C7.02944 21 3 16.9706 3 12C3 9.51472 4.00736 7.26472 5.63604 5.63604M18.364 18.364L5.63604 5.63604"
+                                                            stroke="#fb3b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                        </svg>
+                                                        <span class="text-danger fw-bolder">Aucun élément trouvé</span>
+                                                    </mat-card-content>
+                                                </mat-card>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

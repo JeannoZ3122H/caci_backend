@@ -1,0 +1,19 @@
+.mat__btn__closing{
+    content: '';
+    position: absolute;
+    top: -5px !important;
+    right: -5px !important;
+    z-index: 99
+}
+
+.icoo-floating
+{
+    transform: translateY(-15px) scale(1);
+    animation: icoo-floating linear 4s infinite;
+}
+
+@keyframes icoo-floating {
+    0%, 0%{
+        transform: translateY(0) scale(1.2);
+    }
+}

@@ -1,0 +1,99 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter une bannière':'Modifier une bannière' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="px-1 overflow-hidden overflow-y-scroll mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <form [formGroup]="adminForms">
+                <div class="row justify-content-between mt-2">
+                    <div class="row col-12">
+                        <div class="row col-lg-6">
+                            <div class="col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="text__theme__dark__p">Entrer votre le titre</mat-label>
+                                    <input class="text__theme__dark__p" formControlName="title" [ngModel]="item_title" type="text" matInput placeholder="le titre">
+                                    <mat-icon matSuffix>textsms</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="text__theme__dark__p">Entrer votre lien google forms</mat-label>
+                                    <input class="text__theme__dark__p" formControlName="url" [ngModel]="item_url" type="url" matInput placeholder="Lien google forms">
+                                    <mat-icon matSuffix>link</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="text__theme__dark__p">Selectionnez le type d'évènement</mat-label>
+                                    <mat-select class="text__theme__dark__p" formControlName="type_event" [value]="item_type_event_id">
+                                        @for (item of list_type_event; track $index) {
+                                            <mat-option [value]="item.id">{{ item.type_event }}</mat-option>
+                                        }
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row col-lg-6">
+                            @if(is_upload_file != '' || null){
+                                <div class="col-lg-9 col-8 mb-3">
+                                    <mat-card style="width: 300px !important">
+                                        <img mat-card-image [src]="is_upload_file" class="img-fluid" alt="Fichier chargé">
+                                    </mat-card>
+                                </div>
+                            }
+                            <div class="col-lg-3 col-4 mb-3 d-flex justify-content-center align-items-center h-100">
+                                <div class="">
+                                    <input accept="image/*" #file hidden formControlName="event_img" (change)="uploadFile($event)" class="form-control text__theme__dark__p" type="file" id="id">
+                                </div>
+                                <div class="text-center">
+                                    <p class="text__theme__dark__p">
+                                        {{ is_upload_file != '' || null?"Veuillez cliquer à nouveau pour charger et modifier l'illustration":"Veuillez cliquer pour charger l'illustration" }}
+                                    </p>
+                                    <button color="default" (click)="file.click()" mat-fab>
+                                        <mat-icon class="">file_upload</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label class="text__theme__dark__p">Entrer votre description</mat-label>
+                            <textarea maxlength="400" class="text__theme__dark__p" formControlName="description" matInput placeholder="Veuillez entrer la description">{{ item_description }}</textarea>
+                            <mat-icon matSuffix>view_headline</mat-icon>
+                            @if(!adminForms.get('description')?.hasError('maxlength')){
+                                <mat-hint class="mt-2"><small class="">Mots restants: </small>
+                                    <b class="fs-7 ms-2 fst-italic">{{  400 - (adminForms.value.description).length }}</b>
+                                </mat-hint>
+                            }@else{
+                                <mat-hint class="mt-2">
+                                    <small class="">La description ne doit pas dépasser <b class="fs-7 mx-2 fst-italic">400</b> caractères. </small>
+                                    <small class=""><b class="fs-7 mx-2 fst-italic">+{{ (adminForms.value.description).length - 400 }}</b> caractères. </small>
+                                </mat-hint>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button [disabled]="adminForms.invalid" (click)="addNewItem()"
+                    mat-fab extended color="primary">
+                        <mat-icon>save</mat-icon>
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

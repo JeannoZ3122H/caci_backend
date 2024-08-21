@@ -1,0 +1,72 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajout de politiques et confidentialités':'Modification de politiques et confidentialités' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content class="px-1 py-2 mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        @if(form_type == 'add'){
+            <mat-card-content>
+                <div class="row justify-content-between mt-2">
+                    <div class="col-md-12">
+                        <div class="NgxEditor__Wrapper" [style]="html == ''?'height: 400px !important':'height: auto!important'">
+                            <ngx-editor-menu 
+                            [editor]="editor"
+                            [toolbar]="toolbar"
+                            [colorPresets]="colorPresets"> </ngx-editor-menu>
+                            <ngx-editor
+                                [editor]="editor"
+                                [ngModel]="html"
+                                [disabled]="false"
+                                [placeholder]="'Type here...'"
+                            ></ngx-editor>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button [disabled]="html == ''" (click)="submitAddForms()" mat-fab extended color="primary">
+                        <mat-icon>save</mat-icon>
+                        Enregistrer
+                    </button>
+                </div>
+            </mat-card-content>
+        }
+
+        @if(form_type == 'edit'){
+            <mat-card-content>
+                <div class="row justify-content-between mt-2">
+                    <div class="col-md-12">
+                        <div class="NgxEditor__Wrapper">
+                            <ngx-editor-menu 
+                            [editor]="editor"
+                            [toolbar]="toolbar"
+                            [colorPresets]="colorPresets"> </ngx-editor-menu>
+                            <ngx-editor
+                                [editor]="editor"
+                                [ngModel]="html"
+                                [disabled]="false"
+                                [placeholder]="'Type here...'"
+                            ></ngx-editor>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button [disabled]="html == ''" (click)="submitEditForms()" mat-fab extended color="primary">
+                        <mat-icon>save</mat-icon>
+                        Enregistrer
+                    </button>
+                </div>
+            </mat-card-content>
+        }
+    </mat-card>
+</div>

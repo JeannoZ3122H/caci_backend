@@ -1,0 +1,58 @@
+
+<div class="d-lg-flex position-relative h-100">
+    <a class="circle bg-white text-primary border square--40 
+        position-absolute top-0 end-0 mt-3 me-3" role="button" (click)="goToBack()"
+        data-bs-toggle="tooltip" data-bs-placement="left" 
+        aria-label="Back" data-bs-original-title="Back">
+        <i class="fa-solid fa-reply"></i>
+    </a>
+    
+    <!-- Signup Form -->
+    <div class="d-flex flex-column align-items-center w-75 h-100 px-4 px-md-5 py-5">
+        <div class="w-100 mt-auto py-4 px-xl-4 px-lg-3">
+            <div class="d-flex mb-3">
+                <img src="assets/img/logo-info.png" class="img-fluid" width="120" alt="logo">
+            </div>
+            
+            <h1 class="fs-1 text-uppercase">Faire une demande</h1>
+            <p class="pb-3 mb-3 mb-lg-4">
+                Content de te revoir! Veuillez vous enregistrer avec vos informations pour continuer.
+            </p>
+            <form class="frms-validation"> 
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-6 col-11">
+                        <div class="position-relative mb-4 ">
+                            <i class="fa-regular fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            <input class="form-control lg ps-5" type="email" placeholder="Email address" required="">
+                        </div>
+                        <div class="mb-4 position-relative">
+                            <i class="fa-solid fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            <input class="form-control lg ps-5" type="password" id="password-field" name="password" placeholder="Password" required="">
+                            <span class="fa-solid fa-eye toggle-password position-absolute top-50 end-0 translate-middle-y me-3"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-11">
+                        <div class="position-relative mb-4 ">
+                            <i class="fa-regular fa-envelope position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            <input class="form-control lg ps-5" type="email" placeholder="Email address" required="">
+                        </div>
+                        <div class="mb-4 position-relative">
+                            <i class="fa-solid fa-lock position-absolute top-50 start-0 translate-middle-y ms-3"></i>
+                            <input class="form-control lg ps-5" type="password" id="password-field" name="password" placeholder="Password" required="">
+                            <span class="fa-solid fa-eye toggle-password position-absolute top-50 end-0 translate-middle-y me-3"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-2">
+                    <button class="btn btn-lg btn-primary w-100" type="submit">S'enregistrer</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+

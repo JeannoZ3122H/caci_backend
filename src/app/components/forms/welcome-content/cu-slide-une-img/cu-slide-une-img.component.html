@@ -1,0 +1,100 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter une bannière':'Modifier une bannière' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="px-1 overflow-hidden overflow-y-scroll mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <form [formGroup]="forms">
+                <div class="row justify-content-between mt-2">
+                    <div class="col-12 row">
+                        @if(is_upload_file){
+                            <div class="col-lg-9 col-8 mb-3">
+                                <mat-card style="width: 300px !important">
+                                    <img mat-card-image [src]="is_upload_file" class="img-fluid" alt="Fichier chargé">
+                                </mat-card>
+                            </div>
+                        }
+                        <div [class]="is_upload_file?
+                        'col-lg-3 col-4 mb-3 d-flex justify-content-center align-items-center h-100':
+                        'col-12 mb-3 d-flex justify-content-center align-items-center h-100'
+                        ">
+                            <div class="">
+                                <input accept="image/*" #file hidden formControlName="slide_img" (change)="uploadFile($event)" class="form-control text__theme__dark__p" type="file" id="id">
+                            </div>
+                            <div class="text-center">
+                                <p class="text__theme__dark__p">
+                                    {{ is_upload_file?"Veuillez cliquer à nouveau pour charger et modifier l'illustration (max: 1mb)":"Veuillez cliquer pour charger l'illustration(max: 1mb)" }}
+                                </p>
+                                <button color="default" (click)="file.click()" mat-fab>
+                                    <mat-icon class="">file_upload</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <mat-form-field appearance="outline">
+                            <mat-label class="text__theme__dark__p">Entrer le titre </mat-label>
+                            <input class="text__theme__dark__p" formControlName="title" matInput placeholder="Veuillez entrer la description">
+                            <mat-icon matSuffix>edit_note</mat-icon>
+                            @if(!forms.get('title')?.hasError('maxlength')){
+                                <mat-hint class="mt-2"><small class="">Mots restants: </small>
+                                    <b class="fs-7 ms-2 fst-italic">{{  50 - (forms.value.title).length }}</b>
+                                </mat-hint>
+                            }@else{
+                                <mat-hint class="mt-2">
+                                    <small class="">Le titre ne doit pas dépasser <b class="fs-7 mx-2 fst-italic">50</b> caractères. </small>
+                                    <small class=""><b class="fs-7 mx-2 fst-italic">+{{ (forms.value.title).length - 50 }}</b> caractères. </small>
+                                </mat-hint>
+                            }
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label class="text__theme__dark__p">Entrer la description</mat-label>
+                            <textarea maxlength="400" class="text__theme__dark__p" formControlName="description" matInput placeholder="Veuillez entrer la description">{{ item_description }}</textarea>
+                            <mat-icon matSuffix>view_headline</mat-icon>
+                            @if(!forms.get('description')?.hasError('maxlength')){
+                                <mat-hint class="mt-2"><small class="">Mots restants: </small>
+                                    <b class="fs-7 ms-2 fst-italic">{{  400 - (forms.value.description).length }}</b>
+                                </mat-hint>
+                            }@else{
+                                <mat-hint class="mt-2">
+                                    <small class="">La description ne doit pas dépasser <b class="fs-7 mx-2 fst-italic">400</b> caractères. </small>
+                                    <small class=""><b class="fs-7 mx-2 fst-italic">+{{ (forms.value.description).length - 400 }}</b> caractères. </small>
+                                </mat-hint>
+                            }
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="text-center">
+                    @if(form_type == 'add'){
+                        <button [disabled]="forms.invalid" (click)="addNewItem()"
+                        mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Enregistrer
+                        </button>
+                    }
+                    @if(form_type == 'edit'){
+                        <button [disabled]="forms.invalid" (click)="editCurrentItem()"
+                        mat-fab extended color="primary">
+                            <mat-icon>edit_note</mat-icon>
+                            Modifier
+                        </button>
+                    }
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

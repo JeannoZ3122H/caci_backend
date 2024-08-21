@@ -1,0 +1,15 @@
+.icon-spin{
+    animation: rotate 5s linear infinite;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+mat-menu.mat-mdc-menu-panel .mat-mdc-elevation-specific{
+    max-width: 800px !important
+}

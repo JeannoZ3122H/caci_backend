@@ -1,0 +1,122 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter un évènement':'Modifier un évènement' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="px-1 overflow-hidden overflow-y-scroll mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <form [formGroup]="forms">
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+                    <mat-tab label="First">
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon me-2">looks_one</mat-icon>
+                            Informations
+                        </ng-template>
+                        <ng-container>
+                            <div class="row justify-content-between mt-2">
+                                <div class="col-12 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label class="text__theme__dark__p">Entrer votre le titre</mat-label>
+                                        <input class="text__theme__dark__p" formControlName="event_title" type="text" matInput placeholder="le titre">
+                                        <mat-icon matSuffix>textsms</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label class="text__theme__dark__p">Selectionnez le type d'évènement</mat-label>
+                                        <mat-select class="text__theme__dark__p" formControlName="type_event">
+                                            @for (item of list_type_event; track $index) {
+                                                <mat-option [value]="item.id">{{ item.type_event }}</mat-option>
+                                            }
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <h2 class="text-center">Description</h2>
+                                    <div style="height: 360px !important" class="NgxEditor__Wrapper">
+                                        <ngx-editor-menu [editor]="editor"
+                                        [colorPresets]="colorPresets" [toolbar]="toolbar"> </ngx-editor-menu>
+                                        <ngx-editor
+                                            [editor]="editor"
+                                            formControlName="event_description"
+                                            [placeholder]="'Veuillez entrer la description'"
+                                        ></ngx-editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </mat-tab>
+                    <mat-tab label="Second">
+                        <ng-template mat-tab-label>
+                            <mat-icon class="example-tab-icon me-2">looks_two</mat-icon>
+                            Illustrations de l'évènement
+                        </ng-template>
+                        <ng-container>
+                            <div [class]="imgUploadList.length > 0?'row justify-content-between mt-2':'row justify-content-center mt-2'">
+                                <div [class]="imgUploadList.length > 0?'row justify-content-center col-12':'row justify-content-center col-lg-6'">
+                                    @if(imgUploadList.length > 0){
+                                        <mat-divider></mat-divider>
+                                        <div [class]="imgUploadList.length > 0?
+                                        'col-12 g-2 row justify-content-center mb-3':'col-lg-9 g-2 col-8 row justify-content-center mb-3'">
+                                            @for (img of imgUploadList; track $index) {
+                                                <div class="col-lg-3 col-md-4 col-6">
+                                                    <mat-card>
+                                                        <img mat-card-image [src]="img.src" class="img-fluid" alt="Fichier chargé">
+                                                    </mat-card>
+                                                </div>
+                                            }
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                    }
+                                    <div [class]="imgUploadList.length > 0 && imgUploadList.length > 3?
+                                        'col-12 my-3 d-flex justify-content-center align-items-center':'col-lg-3 col-4 mb-3 d-flex justify-content-center align-items-center'">
+                                        <input accept="image/*" multiple #file hidden (change)="uploadFile($event)"
+                                        class="form-control text__theme__dark__p" type="file" id="id">
+
+                                        <mat-card (click)="file.click()" class="p-3" style="border: 2px dotted gray">
+                                            <div class="text-center" style="width: 300px !important">
+                                                <p style="border: 2px dotted gray" class="text__theme__dark__p px-2 py-3 mb-2">
+                                                    {{ is_upload_file != '' || null?"Veuillez cliquer à nouveau pour charger et modifier les/l'illustration(s)":"Veuillez cliquer pour charger les/l'illustration(s)" }}
+                                                </p>
+                                                <button color="default" type="button" mat-fab>
+                                                    <mat-icon class="">file_upload</mat-icon>
+                                                </button>
+                                            </div>
+                                        </mat-card>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </mat-tab>
+                </mat-tab-group>
+                <div class="text-center mt-3">
+                    @if(form_type == 'add'){
+                        <button [disabled]="forms.invalid" (click)="addNewItem()"
+                        mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Enregistrer
+                        </button>
+                    }@else{
+                        <button [disabled]="forms.invalid" (click)="editCurrentItem()"
+                        mat-fab extended color="primary">
+                            <mat-icon>edit_note</mat-icon>
+                            Modifier
+                        </button>
+                    }
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,0 +1,21 @@
+
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder">
+            <span class="text-danger uil uil-bell fs-1"></span>
+        </h2>
+        <h2 class="text-uppercase mb-0 fw-bolder text-danger">
+            Suppression
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content>
+    <p class="text-center">Êtes-vous sûr de vouloir supprimer cet élément ? Cette action est irréversible.</p>
+</div>
+<div mat-dialog-actions class="d-flex justify-content-between">
+    <button mat-raised-button color="default"(click)="close(false)">Annuler</button>
+    <button mat-raised-button color="warn"(click)="close(true)">Oui, supprimer</button>
+</div>

@@ -1,0 +1,298 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('../src/assets/css/material-all.css');
+@import url("../src/assets/css/user.min.css");
+@import url("../src/assets/css/theme.min.css");
+@import url("../src/assets/vendors/simplebar/simplebar.min.css");
+@import url("https://unicons.iconscout.com/release/v4.0.8/css/line.css");
+@import url("../src/assets/vendors/leaflet/leaflet.css");
+@import url("../src/assets/vendors/leaflet.markercluster/MarkerCluster.css");
+@import url("../src/assets/vendors/leaflet.markercluster/MarkerCluster.Default.css");
+
+html, body { height: 100%; }
+body { margin: 0 }
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+    background: #21397fc3;
+}
+
+/* // boostrap 5 */
+/* @import 'ngx-toastr/toastr-bs5-alert'; */
+.ngx-loading-logo{
+    width: 15% !important;
+    height: max-content !important;
+    top: 50%;
+}
+
+.header.header-transparent .nav-menu>li>a:hover
+{
+    color: #21397f !important;
+}
+/* .zoom__text{
+
+} */
+
+.card__hover__shadow{
+    transition: all .4s;
+}
+
+.card__hover__shadow:hover{
+    transition: all .4s;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.trans
+{
+    transition: all .4s !important;
+}
+
+
+.action__mat__list__item{
+    transition: all .4s;
+    background-color: #fff !important;
+    border-radius: 0px !important;
+}
+
+.action__mat__list__item__button
+{
+    transition: all .4s;
+    background: #fff !important;
+}
+
+.action__mat__list__item:hover{
+    transition: all .4s;
+    background-color: #011d6b!important;
+    border-radius: 0px !important;
+}
+
+
+.action__mat__list__item:hover .action__mat__list__item__button,
+.action__mat__list__item:hover .action__mat__list__item__button mat-icon{
+    transition: all .4s;
+    color: #fff !important;
+    background: #8f9cd195 !important;
+}
+
+:root{
+    --phoenix-emphasis-bg-dark: #141824;
+    --phoenix-emphasis-bg-dark-rgb: 20, 24, 36;
+    --phoenix-emphasis-bg-light: #fff;
+    --phoenix-emphasis-bg-light-rgb: 255, 255, 255;
+    --phoenix-emphasis-bg-blue: #011d6b;
+    --phoenix-emphasis-bg-blue-rgb: 1, 29, 107;
+    --phoenix-emphasis-bg-miblue: #8f9cd1;
+    --phoenix-emphasis-bg-miblue-rgb: 143, 156, 209;
+    --phoenix-emphasis-bg-dark-card: #222834;
+    --phoenix-emphasis-bg-dark-card-rgb: 34, 40, 52;
+    --phoenix-emphasis-bg-gray: #ada8a8;
+}
+
+/* 🍀🍀🍀🍀 START
+    THEME DARK CSS 🍀🍀🍀🍀*/
+
+html[data-bs-theme="dark"] .mat__custumer__container__bg{
+    background: var(--phoenix-emphasis-bg-dark) !important;
+}
+
+html[data-bs-theme="dark"] .mat__custumer__card__bg{
+    background: var(--phoenix-emphasis-bg-dark-card) !important;
+}
+html[data-bs-theme="dark"] .mdc-dialog__surface{
+    background: var(--phoenix-emphasis-bg-dark-card) !important;
+}
+
+
+html[data-bs-theme="dark"] .mat-mdc-text-field-wrapper{
+    border-radius: 8px !important;
+    border: 2px solid rgba(var(--phoenix-emphasis-bg-light-rgb), .2) !important;
+    background: var(--phoenix-emphasis-bg-dark-card) !important;
+}
+
+html[data-bs-theme="dark"] h1,
+html[data-bs-theme="dark"] h2,
+html[data-bs-theme="dark"] h3,
+html[data-bs-theme="dark"] h4,
+html[data-bs-theme="dark"] h5,
+html[data-bs-theme="dark"] h6,
+html[data-bs-theme="dark"] button span,
+html[data-bs-theme="dark"] p span,
+html[data-bs-theme="dark"] p,
+html[data-bs-theme="dark"] strong,
+html[data-bs-theme="dark"] small,
+html[data-bs-theme="dark"] button mat-icon,
+html[data-bs-theme="dark"] i,
+html[data-bs-theme="dark"] svg,
+html[data-bs-theme="dark"] .navbar-top
+{
+    color: var(--phoenix-emphasis-bg-gray) !important;
+}
+
+html[data-bs-theme="dark"] .text__theme
+{
+    color: var(--phoenix-emphasis-bg-blue) !important;
+}
+
+html[data-bs-theme="dark"] .table-bordered
+{
+    border: 1px solid var(--phoenix-emphasis-bg-gray) !important;
+}
+
+
+html[data-bs-theme="dark"] .custumer__button__bg,
+html[data-bs-theme="dark"] .navbar-top,
+html[data-bs-theme="dark"] body
+{
+    background: var(--phoenix-emphasis-bg-dark);
+    border: 1px solid var(--phoenix-emphasis-bg-dark-card);
+    box-shadow: rgba(255, 255, 255, 0.05) 0px 0px 0px 1px !important;
+}
+
+
+html[data-bs-theme="dark"] .mat__list__item{
+    transition: all .4s;
+    background-color: #d4d6dc30;
+    border-radius: 0px !important;
+}
+
+html[data-bs-theme="dark"] .mat__list__item__button
+{
+    transition: all .4s;
+    color: var(--phoenix-emphasis-bg-blue);
+    background: var(--phoenix-emphasis-bg-dark);
+    transform: scale (1)
+}
+
+html[data-bs-theme="dark"] .mat__list__item:hover,
+html[data-bs-theme="dark"] .active{
+    transition: all .4s;
+    background-color: #011d6b !important;
+    border-radius: 0px !important;
+}
+
+
+html[data-bs-theme="dark"] .mat__list__item:hover .mat__list__item__button{
+    transition: all .4s;
+    color: var(--phoenix-emphasis-bg-light);
+    background: var(--phoenix-emphasis-bg-dark);
+    box-shadow:
+        rgba(136, 165, 191, 0.858) 6px 2px 16px 0px,
+        rgba(255, 255, 255, 1) -6px -2px 16px 0px !important;
+    transform: scale(1.02) !important
+}
+
+html[data-bs-theme="dark"] .text__theme__p
+{
+    color: var(--phoenix-emphasis-bg-gray) !important;
+}
+
+html[data-bs-theme="dark"] .text__theme__dark__p
+{
+    color: var(--phoenix-emphasis-bg-gray) !important;
+}
+
+/* 🍀🍀🍀🍀 THEME DARK CSS
+    END 🍀🍀🍀🍀*/
+
+
+/* 🍀🍀🍀🍀 START
+    THEME LIGHT CSS 🍀🍀🍀🍀*/
+
+html[data-bs-theme="light"] .text__theme
+{
+    color: var(--phoenix-emphasis-bg-blue) !important;
+}
+
+html[data-bs-theme="light"] .text__theme__p
+{
+    color: var(--phoenix-emphasis-bg-dark) !important;
+}
+
+html[data-bs-theme="light"] .text__theme__light__p
+{
+    color: var(--phoenix-emphasis-bg-dark) !important;
+}
+
+html[data-bs-theme="light"] .mat__custumer__container__bg{
+    background: var(--phoenix-emphasis-bg-light) !important;
+}
+
+html[data-bs-theme="light"] .mat__list__item__button span,
+html[data-bs-theme="light"] .mat__list__item__button
+{
+    color: var(--phoenix-emphasis-bg-blue)
+}
+
+html[data-bs-theme="light"] .active span
+{
+    color: var(--phoenix-emphasis-bg-light)
+}
+
+html[data-bs-theme="light"] .custumer__button__bg,
+html[data-bs-theme="light"] .navbar-top,
+html[data-bs-theme="light"] body
+{
+    background: var(--phoenix-emphasis-bg-light) !important;
+    border: 1px solid white;
+    box-shadow: rgba(var(--phoenix-emphasis-bg-dark-rgb), 0.05) 0px 0px 0px 1px !important;
+}
+
+html[data-bs-theme="light"] .mat__list__item{
+    transition: all .4s;
+    background: var(--phoenix-emphasis-bg-light);
+}
+
+html[data-bs-theme="light"] .mat__list__item__button_label{
+    transition: all .4s;
+    background: var(--phoenix-emphasis-bg-blue);
+}
+
+html[data-bs-theme="light"] .mat__list__item:hover,
+html[data-bs-theme="light"] .active{
+    transition: all .4s;
+    background: var(--phoenix-emphasis-bg-miblue);
+    border-radius: 0px !important;
+}
+
+html[data-bs-theme="light"] .mat__list__item__button
+{
+    transition: all .4s;
+    background: var(--phoenix-emphasis-bg-miblue);
+    transform: scale (1)
+}
+
+/* html[data-bs-theme="light"] .active */
+html[data-bs-theme="light"] .mat__list__item:hover .mat__list__item__button,
+html[data-bs-theme="light"] .active .mat__list__item__button{
+    transition: all .4s;
+    color: var(--phoenix-emphasis-bg-light) !important;
+    background: var(--phoenix-emphasis-bg-blue);
+    transform: scale(1.02) !important
+}
+
+html[data-bs-theme="light"] .mat__list__item:hover .mat__list__item__button span
+{
+    color: var(--phoenix-emphasis-bg-light);
+}
+
+/* 🍀🍀🍀🍀 THEME LIGHT CSS
+    END 🍀🍀🍀🍀*/
+
+.mat__btn__closing{
+    content: '';
+    position: absolute;
+    top: -5px !important;
+    right: -5px !important;
+    z-index: 99
+}
+
+.table-info{
+    position: relative;
+}
+.table-info-icon{
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+}
+.info-content-ico{
+    font-size: 16px !important
+}
