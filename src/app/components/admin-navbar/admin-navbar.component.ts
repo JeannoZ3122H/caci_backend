@@ -120,6 +120,7 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             id: 4,
             category: 'Services',
             nav_item: 'Arbitrage',
+            icon_table: ['gavel', 'auto_stories', 'assured_workload', 'book_2'],
             icon_category: 'service_toolbox',
             icon: 'gavel',
             route: ['/web-admin.service-arbitrage'],
@@ -226,6 +227,13 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_item: 'Rôle',
             icon: 'settings',
             route: ['/web-admin.role'],
+            nav_list: false
+        },
+        {
+            id: 2,
+            nav_item: 'Type services',
+            icon: 'auto_stories',
+            route: ['/web-admin.type-services'],
             nav_list: false
         },
         {

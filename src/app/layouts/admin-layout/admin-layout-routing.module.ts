@@ -24,17 +24,8 @@ import {
   EventsUsComponent,
 } from '../../pages/admin-pages/events-us/events-us.component';
 import {
-  ExpertiseUsComponent,
-} from '../../pages/admin-pages/expertise-us/expertise-us.component';
-import {
-  FormationsUsComponent,
-} from '../../pages/admin-pages/formations-us/formations-us.component';
-import {
   HistoriqueUsComponent,
 } from '../../pages/admin-pages/historique-us/historique-us.component';
-import {
-  MediationUsComponent,
-} from '../../pages/admin-pages/mediation-us/mediation-us.component';
 import {
   MessagerieComponent,
 } from '../../pages/admin-pages/messagerie/messagerie.component';
@@ -58,6 +49,9 @@ import {
 } from '../../pages/admin-pages/resources/publications-us/publications-us.component';
 import { RoleComponent } from '../../pages/admin-pages/role/role.component';
 import {
+  ServicesComponent,
+} from '../../pages/admin-pages/services/services.component';
+import {
   StatistiqueComponent,
 } from '../../pages/admin-pages/statistique/statistique.component';
 import {
@@ -72,6 +66,9 @@ import {
 import {
   TypeEventComponent,
 } from '../../pages/admin-pages/type-event/type-event.component';
+import {
+  TypeServicesComponent,
+} from '../../pages/admin-pages/type-services/type-services.component';
 import {
   TypesPublicationsComponent,
 } from '../../pages/admin-pages/types-publications/types-publications.component';
@@ -197,27 +194,18 @@ const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'web-admin.service-mediation',
-        component: MediationUsComponent,
-        data: { title: 'MÉDIATION' },
+        path: 'web-admin.type-services',
+        component: TypeServicesComponent,
+        data: { title: 'TYPES SERVICES' },
         resolve: {
             layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
         },
         canActivate: [authGuard],
     },
     {
-        path: 'web-admin.service-expertise',
-        component: ExpertiseUsComponent,
-        data: { title: 'EXPERTISE' },
-        resolve: {
-            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
-        },
-        canActivate: [authGuard],
-    },
-    {
-        path: 'web-admin.service-formation',
-        component: FormationsUsComponent,
-        data: { title: 'FORMATION' },
+        path: 'web-admin.service/:type_service_code',
+        component: ServicesComponent,
+        data: { title: 'SERVICES | ' },
         resolve: {
             layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
         },

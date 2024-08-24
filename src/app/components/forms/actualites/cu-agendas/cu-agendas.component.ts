@@ -22,7 +22,17 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 
+import {
+  Editor,
+  NgxEditorModule,
+  schema,
+  Toolbar,
+} from 'ngx-editor';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import {
+  Plugin,
+  PluginKey,
+} from 'prosemirror-state';
 import {
   interval,
   Subject,
@@ -34,7 +44,14 @@ import { MaterialModule } from '../../../../material-module';
 import {
   PartnersService,
 } from '../../../../services/request/admin/partners/partners.service';
+import {
+  LsSecureService,
+} from '../../../../services/secure/ls-secure/ls-secure.service';
 import { ToastService } from '../../../../services/toast/toast.service';
+
+const plugin = new Plugin({
+    key: new PluginKey('plugin'),
+});
 
 @Component({
     selector: 'app-cu-agendas',
@@ -43,7 +60,8 @@ import { ToastService } from '../../../../services/toast/toast.service';
         MaterialModule,
         ReactiveFormsModule,
         FormsModule,
-        CommonModule
+        CommonModule,
+        NgxEditorModule,
     ],
     templateUrl: './cu-agendas.component.html',
     styleUrl: './cu-agendas.component.css'
@@ -70,7 +88,6 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         illusration_event: FormControl<File | any>
     }>({
         price: new FormControl('', [
-            Validators.required,
             Validators.minLength(4)
         ]),
         title_event: new FormControl('', [
@@ -95,10 +112,36 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         localisation_event: new FormControl('', [
             Validators.required,
         ]),
-        illusration_event: new FormControl(null, [
-            Validators.required
-        ]),
+        illusration_event: new FormControl(null),
     });
+    editor: Editor = new Editor({
+        content: '',
+        history: true,
+        keyboardShortcuts: true,
+        inputRules: true,
+        plugins: [], //https://prosemirror.net/docs/guide/#state
+        schema, //https://prosemirror.net/examples/schema/
+        nodeViews: {}, //https://prosemirror.net/docs/guide/#state,
+        attributes: {}, // https://prosemirror.net/docs/ref/#view.EditorProps.attributes
+        linkValidationPattern: '',
+        parseOptions: {}, // https://prosemirror.net/docs/ref/#model.ParseOptions
+    });
+    toolbar: Toolbar = [
+        // default value
+        ['bold', 'italic'],
+        ['underline', 'strike'],
+        ['code', 'blockquote'],
+        ['ordered_list', 'bullet_list'],
+        [{ heading: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }],
+        ['link', 'image'],
+        //[{ link: { showOpenInNewTab: false } }, 'image'],
+        ['text_color', 'background_color'],
+        ['align_left', 'align_center', 'align_right', 'align_justify'],
+        ['horizontal_rule', 'format_clear', 'indent', 'outdent'],
+        ['superscript', 'subscript'],
+        ['undo', 'redo'],
+    ];
+    colorPresets = ['red', '#FF0000', 'rgb(255, 0, 0)'];
 
     protected localStorage!: Storage | undefined;
     private destroy$ = new Subject<void>();
@@ -113,12 +156,15 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         @Inject(DOCUMENT) private _document: Document,
         @Inject(PLATFORM_ID) private _plateFromeID: Document,
         private _dialogRef: MatDialogRef<CuAgendasComponent>,
-        private _loading: NgxUiLoaderService
+        private _loading: NgxUiLoaderService,
+        private _ls: LsSecureService,
     ) { }
 
     ngOnInit(): void {
+        this.editor = new Editor();
         if (this.data != undefined || null) {
             this.localStorage = this._document.defaultView?.localStorage;
+            this.editor.registerPlugin(plugin);
             if (this.data.type == "add") {
                 this.form_type = this.data.type;
                 this.stepIs(1);
@@ -135,7 +181,7 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                         address_event: data.address_event,
                         localisation_event: data.localisation_event,
                         price: data.price,
-                        illusration_event: data.illusration_event,
+                        illusration_event: null,
                     }
                 );
                 this.imageUrl = data.illusration_event;
@@ -154,6 +200,7 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
     // ---add__ 🍀🍀
     addNewItem() {
         const formData = new FormData();
+        formData.append('author_id', this._ls.getDataToStorage().id);
         formData.append('title_event', this.forms.get('title_event')?.value);
         formData.append('description_event', this.forms.get('description_event')?.value);
         formData.append('date_start_event', this.forms.get('date_start_event')?.value);
@@ -187,11 +234,12 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     },
                 }
             )
-        )
+        );
     }
     // ---edit__ 🍀🍀
     editCurrentItem() {
         const formData = new FormData();
+        formData.append('author_id', this._ls.getDataToStorage().id);
         formData.append('title_event', this.forms.get('title_event')?.value);
         formData.append('description_event', this.forms.get('description_event')?.value);
         formData.append('date_start_event', this.forms.get('date_start_event')?.value);
@@ -229,7 +277,7 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     },
                 }
             )
-        )
+        );
     }
 
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 END REQUEST 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
@@ -272,7 +320,7 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                         status_enter_event: this.forms.value.status_enter_event,
                         address_event: this.forms.value.address_event,
                         localisation_event: this.forms.value.localisation_event,
-                        illusration_event: this.forms.value.illusration_event,
+                        illusration_event: null,
                     }
                     localStorage.setItem('ag__fs__data', JSON.stringify(data));
                     // }
@@ -292,7 +340,7 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     status_enter_event: data.status_enter_event,
                     address_event: data.address_event,
                     localisation_event: data.localisation_event,
-                    illusration_event: data.illusration_event,
+                    illusration_event: null,
                 }
                 );
             }

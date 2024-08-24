@@ -1,0 +1,47 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'"
+    [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter un type de service':'Modifier un type de service' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content class="px-1 py-2 mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <form [formGroup]="forms">
+                <div class="row justify-content-between mt-2">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label class="text__theme__dark__p">Entrer le type de service</mat-label>
+                            <input class="text__theme__dark__p" matInput formControlName="type_service" type="text" placeholder="Veuillez entrer ici...">
+                            <mat-icon matSuffix>control_point_duplicate</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="text-center">
+                    @if(form_type == 'add'){
+                        <button [disabled]="forms.invalid" (click)="add()" mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Enregistrer
+                        </button>
+                    }
+                    @if(form_type == 'edit'){
+                        <button [disabled]="forms.invalid" (click)="edit()" mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Modifier
+                        </button>
+                    }
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

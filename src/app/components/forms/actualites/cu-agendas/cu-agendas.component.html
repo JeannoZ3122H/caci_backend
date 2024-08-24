@@ -29,7 +29,14 @@
                                     <div class="col-lg-12 col-12">
                                         <mat-form-field appearance="outline">
                                             <mat-label class="text__theme__dark__p">Entrer le titre de l'évènement</mat-label>
-                                            <textarea style="height: 100px" matInput class="text__theme__dark__p" formControlName="title_event"></textarea>
+                                            <textarea style="height: 50px" matInput class="text__theme__dark__p" formControlName="title_event"></textarea>
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer l'adresse de l'évènement</mat-label>
+                                            <textarea style="height: 50px" matInput class="text__theme__dark__p" formControlName="address_event"></textarea>
                                             <mat-icon matSuffix>edit_note</mat-icon>
                                         </mat-form-field>
                                     </div>
@@ -37,13 +44,6 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label class="text__theme__dark__p">Entrer l'url de localisation googleMap</mat-label>
                                             <input class="text__theme__dark__p" formControlName="localisation_event" type="url" matInput placeholder="Entrer ici...">
-                                            <mat-icon matSuffix>edit_note</mat-icon>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-lg-12 col-12">
-                                        <mat-form-field appearance="outline">
-                                            <mat-label class="text__theme__dark__p">Entrer l'adresse</mat-label>
-                                            <input class="text__theme__dark__p" formControlName="address_event" type="text" matInput placeholder="Entrer ici...">
                                             <mat-icon matSuffix>edit_note</mat-icon>
                                         </mat-form-field>
                                     </div>
@@ -75,7 +75,7 @@
                                 <div class="row justify-content-center mt-3">
                                     <div (click)="file.click()" class="col-lg-4 col-6 d-flex justify-content-center flex-wrap"
                                     [style]="files">
-                                        <input #file accept="image/*"  formControlName="illustration" (change)="onFileChange($event)" hidden class="text__theme__dark__p" type="file">
+                                        <input #file accept="image/*"  formControlName="illusration_event" (change)="onFileChange($event)" hidden class="text__theme__dark__p" type="file">
                                         <p [class]="imageUrl?'text-center text-white':'text-center'">
                                             <strong>
                                                 {{ imageUrl?'Cliquez pour changer le logo':'Cliquez pour charger un logo' }}
@@ -95,10 +95,37 @@
                                 </div>
                             </ng-container>
                         </mat-tab>
+                        <mat-tab label="Third">
+                            <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon me-2">looks_3</mat-icon>
+                                Description
+                            </ng-template>
+                            <ng-container>
+                                <div class="row justify-content-between mt-2">
+                                    <div class="col-lg-12 col-12">
+                                        <!-- <mat-form-field>
+                                            <input [ngxTimepicker]="picker">
+                                            <ngx-material-timepicker #picker></ngx-material-timepicker>
+                                        </mat-form-field> -->
+                                    </div>
+                                </div>
+                                    <!-- <div class="col-lg-12 col-12"> -->
+                                        <div class="NgxEditor__Wrapper" style="max-height: 100%; height: 400px">
+                                            <ngx-editor-menu [toolbar]="toolbar"
+                                            [colorPresets]="colorPresets" [editor]="editor"> </ngx-editor-menu>
+                                            <ngx-editor
+                                                [editor]="editor"
+                                                formControlName="description_event"
+                                                [placeholder]="'Entrer la description ici...'"
+                                            ></ngx-editor>
+                                        </div>
+                                    <!-- </div> -->
+                            </ng-container>
+                        </mat-tab>
                     </mat-tab-group>
                     <div class="text-center mt-3">
                         @if(form_type == 'add'){
-                            <button (click)="addNewItem()" [disabled]="forms.invalid && !imageUrl" mat-fab extended color="primary">
+                            <button (click)="addNewItem()" [disabled]="forms.invalid || !imageUrl" mat-fab extended color="primary">
                                 <mat-icon>save</mat-icon>
                                 Enregistrer
                             </button>

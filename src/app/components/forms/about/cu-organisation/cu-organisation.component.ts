@@ -53,8 +53,8 @@ import {
 import { ToastService } from '../../../../services/toast/toast.service';
 
 const plugin = new Plugin({
-      key: new PluginKey('plugin'),
-  });
+    key: new PluginKey('plugin'),
+});
 
 @Component({
     selector: 'app-cu-organisation',

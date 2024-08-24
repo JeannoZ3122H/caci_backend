@@ -11,6 +11,7 @@ import {
   LOCALE_ID,
 } from '@angular/core';
 import { provideClientHydration } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   provideAnimationsAsync,
 } from '@angular/platform-browser/animations/async';
@@ -26,6 +27,10 @@ import {
   NgxUiLoaderRouterModule,
 } from 'ngx-ui-loader';
 
+import {
+  NGX_MAT_DATE_FORMATS,
+  NgxMatDateFormats,
+} from '@angular-material-components/datetime-picker';
 import {
   TranslateLoader,
   TranslateModule,
@@ -69,12 +74,34 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "maxTime": -1,
     "minTime": 300
 };
+export const MY_NATIVE_FORMATS = {
+    fullPickerInput: {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'},
+    datePickerInput: {year: 'numeric', month: 'numeric', day: 'numeric'},
+    timePickerInput: {hour: 'numeric', minute: 'numeric'},
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'},
+};
+const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
+    parse: {
+        dateInput: "l, LTS"
+    },
+    display: {
+        dateInput: "l, LTS",
+        monthYearLabel: "MMM YYYY",
+        dateA11yLabel: "LL",
+        monthYearA11yLabel: "MMMM YYYY"
+    }
+};
 
 registerLocaleData(localeFr);
 
 export const appConfig: ApplicationConfig = {
     providers: [
         { provide: LOCALE_ID, useValue: 'fr-FR' },
+        // {provide: OWL_DATE_TIME_FORMATS, useValue: MY_NATIVE_FORMATS},
+        // {provide: [OWL_DATE_TIME_LOCALE], useValue: 'fr'},
+        { provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
         provideRouter(routes),
         provideClientHydration(),
         provideHttpClient(withFetch()),
@@ -139,7 +166,8 @@ export const appConfig: ApplicationConfig = {
                     remove: 'Remove',
                     enterValidUrl: 'Please enter a valid URL',
                 },
-            })
+            }),
+            BrowserAnimationsModule,
         ),
         provideToastr({
             timeOut: 1000,
