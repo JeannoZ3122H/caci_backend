@@ -95,6 +95,29 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
         },
         {
             id: 4,
+            category: 'À propos',
+            nav_item: 'Historique',
+            icon_category: 'service_toolbox',
+            icon: 'gavel',
+            route: ['/web-admin.about-historiques'],
+            nav_list: false
+        },
+        {
+            id: 5,
+            nav_item: 'Missions',
+            icon: 'auto_stories',
+            route: ['/web-admin.about-missions'],
+            nav_list: false
+        },
+        {
+            id: 5,
+            nav_item: 'Organisations',
+            icon: 'auto_stories',
+            route: ['/web-admin.about-organisations'],
+            nav_list: false
+        },
+        {
+            id: 4,
             category: 'Services',
             nav_item: 'Arbitrage',
             icon_category: 'service_toolbox',
@@ -140,6 +163,13 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_list: false
         },
         {
+            id: 5,
+            nav_item: 'Agendas',
+            icon: 'edit_calendar',
+            route: ['/web-admin.actualite-agendas'],
+            nav_list: false
+        },
+        {
             id: 6,
             category: 'Pages',
             nav_item: 'Image accueil',
@@ -164,9 +194,36 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
         },
         {
             id: 3,
-            category: 'Paramètres du site',
+            category: 'Ressources',
+            nav_item: 'Publications',
+            icon_category: 'library_books',
+            icon: 'auto_stories',
+            route: ['/web-admin.ressource-publications'],
+            nav_list: false
+        },
+        {
+            id: 3,
+            nav_item: 'Liens utiles',
+            icon: 'link',
+            route: ['/web-admin.ressource-lien-utiles'],
+            nav_list: false
+        }
+    ];
+
+    page_menu_list: any [] = [
+        {
+            id: 1,
+            nav_item: 'Termes & Conditions',
+            icon: 'policy',
+            route: ['/web-admin.terms-and-policy'],
+            nav_list: false
+        },
+    ];
+
+    setting_menu_list: any[] = [
+        {
+            id: 1,
             nav_item: 'Rôle',
-            icon_category: 'engineering',
             icon: 'settings',
             route: ['/web-admin.role'],
             nav_list: false
@@ -176,6 +233,13 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_item: 'Type évènements',
             icon: 'settings',
             route: ['/web-admin.type-events'],
+            nav_list: false
+        },
+        {
+            id: 4,
+            nav_item: 'Type publications',
+            icon: 'checkbook',
+            route: ['/web-admin.ressource-type-publications'],
             nav_list: false
         },
         {
@@ -190,16 +254,6 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_item: 'Statistique',
             icon: 'settings',
             route: ['/web-admin.statistics-us'],
-            nav_list: false
-        },
-    ];
-
-    page_menu_list: any [] = [
-        {
-            id: 1,
-            nav_item: 'Termes & Conditions',
-            icon: 'policy',
-            route: ['/web-admin.terms-and-policy'],
             nav_list: false
         },
     ];

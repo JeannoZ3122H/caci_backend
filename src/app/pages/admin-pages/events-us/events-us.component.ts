@@ -41,8 +41,8 @@ export class EventsUsComponent implements OnInit, OnDestroy {
 
     private unscribe = new Subscription();
     public list_events: any[] = [];
+    public list_events_news: any[] = [];
     p: number = 1;
-    list_len: number = 0;
 
     customOptions: OwlOptions = {
         loop: true,
@@ -66,7 +66,7 @@ export class EventsUsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit(): void {
-        // this.getListEvents();
+        this.getListEvents();
     }
 
     // __------__ 🍀🍀🍀🍀🍀__---   🍀 START REQUEST 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
@@ -77,9 +77,15 @@ export class EventsUsComponent implements OnInit, OnDestroy {
             this.__request.get().subscribe(
                 {
                     next: (resp: any) => {
-                        this.list_events = resp;
-                        this.list_len = resp.length;
-                        console.log(resp)
+                        if(resp){
+                            resp.forEach((el: any) => {
+                                // el.event_img = JSON.parse(el.event_img);
+                                if(el.event_img != null){
+                                    Object.assign(el, {list_img: JSON.parse(el.event_img)});
+                                }
+                            });
+                            this.list_events_news = resp;
+                        }
                     },
                     error: (err: any) => {
                         console.log('error', err)

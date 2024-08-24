@@ -31,7 +31,7 @@ export class EventService {
     // 🍀🍀__-  Update Role In List 🍀
         update(data: any, slg: string) {
             let url = this.__apiUrl.apiUrl + `update_current_event/${slg}`;
-            return this.__http.put(url, data, this.__apiUrl.getHeaders());
+            return this.__http.post(url, data, this.__apiUrl.getHeaders());
         }
 
     // 🍀🍀__-  Delete Role In List 🍀

@@ -6,6 +6,9 @@ import {
 
 import { authGuard } from '../../guard/auth.guard';
 import {
+  AgendasUsComponent,
+} from '../../pages/admin-pages/actualites/agendas-us/agendas-us.component';
+import {
   AdminAccountsComponent,
 } from '../../pages/admin-pages/admin-accounts/admin-accounts.component';
 import {
@@ -36,11 +39,23 @@ import {
   MessagerieComponent,
 } from '../../pages/admin-pages/messagerie/messagerie.component';
 import {
+  MissionUsComponent,
+} from '../../pages/admin-pages/mission-us/mission-us.component';
+import {
   NewslettersComponent,
 } from '../../pages/admin-pages/newsletters/newsletters.component';
 import {
+  OrganizationUsComponent,
+} from '../../pages/admin-pages/organization-us/organization-us.component';
+import {
   PartnersUsComponent,
 } from '../../pages/admin-pages/partners-us/partners-us.component';
+import {
+  LiensUtilesUsComponent,
+} from '../../pages/admin-pages/resources/liens-utiles-us/liens-utiles-us.component';
+import {
+  PublicationsUsComponent,
+} from '../../pages/admin-pages/resources/publications-us/publications-us.component';
 import { RoleComponent } from '../../pages/admin-pages/role/role.component';
 import {
   StatistiqueComponent,
@@ -57,6 +72,9 @@ import {
 import {
   TypeEventComponent,
 } from '../../pages/admin-pages/type-event/type-event.component';
+import {
+  TypesPublicationsComponent,
+} from '../../pages/admin-pages/types-publications/types-publications.component';
 import {
   SlideUneImgComponent,
 } from '../../pages/admin-pages/welcome-content/slide-une-img/slide-une-img.component';
@@ -131,6 +149,36 @@ const routes: Routes = [
         path: 'web-admin.account-teams-us',
         component: TeamsUsComponent,
         data: { title: 'NOTRE ÉQUIPE' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+// _-__--__ 🥝🥝
+
+// _-__--__ 🥝🥝 ABOUT ROUTES 🥝
+    {
+        path: 'web-admin.about-historiques',
+        component: HistoriqueUsComponent,
+        data: { title: 'HISTORIQUES' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+    {
+        path: 'web-admin.about-missions',
+        component: MissionUsComponent,
+        data: { title: 'MISSIONS' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+    {
+        path: 'web-admin.about-organisations',
+        component: OrganizationUsComponent,
+        data: { title: 'ORGANISATIONS' },
         resolve: {
             layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
         },
@@ -236,7 +284,7 @@ const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'web-admin.historics-us',
+        path: 'web-admin.historics-site',
         component: HistoriqueUsComponent,
         data: { title: 'HISTORIQUE' },
         resolve: {
@@ -254,6 +302,49 @@ const routes: Routes = [
         canActivate: [authGuard],
     },
 // _-__--__ 🥝🥝
+
+// _-__--__ 🥝🥝 AGENDAS ROUTES 🥝
+{
+    path: 'web-admin.actualite-agendas',
+    component: AgendasUsComponent,
+    data: { title: 'AGENDA' },
+    resolve: {
+        layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+    },
+    canActivate: [authGuard],
+},
+// _-__--__ 🥝🥝
+
+// _-__--__ 🥝🥝 RESSOURCES ROUTES 🥝
+{
+    path: 'web-admin.ressource-type-publications',
+    component: TypesPublicationsComponent,
+    data: { title: 'TYPE DE PUBLICATIONS' },
+    resolve: {
+        layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+    },
+    canActivate: [authGuard],
+},
+{
+    path: 'web-admin.ressource-publications',
+    component: PublicationsUsComponent,
+    data: { title: 'PUBLICATIONS' },
+    resolve: {
+        layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+    },
+    canActivate: [authGuard],
+},
+{
+    path: 'web-admin.ressource-lien-utiles',
+    component: LiensUtilesUsComponent,
+    data: { title: 'LIENS UTILES' },
+    resolve: {
+        layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+    },
+    canActivate: [authGuard],
+},
+// _-__--__ 🥝🥝
+
 ];
 
 @NgModule({

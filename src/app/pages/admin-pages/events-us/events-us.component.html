@@ -96,7 +96,7 @@
                         </thead>
                         <tbody class="" id="bulk-select-body">
 
-                            @for (event of list_events | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                            @for (event of list_events_news | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
                                 <tr>
                                     <td class="white-space-nowrap ps-2 fs-9 align-middle ps-0">
                                         <div class="form-check mb-0 text-center fs-8">
@@ -105,9 +105,9 @@
                                     </td>
                                     <td class="align-middle email text__theme__dark__p">{{ $index+1 }}</td>
                                     <td class="align-middle ps-3 text-center d-flex">
-                                        @if((event.event_img).length > 0){
+                                        @if((event.list_img).length > 0){
                                             <div class="avatar-group mb-0">
-                                                @for (img of event.event_img; track $index) {
+                                                @for (img of event.list_img; track $index) {
                                                     @if($index <= 2){
                                                         <div style="cursor: pointer !important" matTooltip="Cliquez pour voir en grand échelle"
                                                         [matMenuTriggerFor]="menu2" class="avatar avatar-xl ">
@@ -115,15 +115,15 @@
                                                         </div>
                                                     }
                                                 }
-                                                @if((event.event_img).length > 2){
+                                                @if((event.list_img).length > 2){
                                                     <div class="avatar avatar-xl ">
-                                                        <div class="avatar-name rounded-circle"><span>+{{ (event.event_img).length - 3 }}</span></div>
+                                                        <div class="avatar-name rounded-circle"><span>+{{ (event.list_img).length - 3 }}</span></div>
                                                     </div>
                                                 }
                                             </div>
                                             <mat-menu #menu2="matMenu" class="m-0 p-0">
                                                 <div class="row g-2">
-                                                    @for (img of event.event_img; track $index) {
+                                                    @for (img of event.list_img; track $index) {
                                                         <div class="col-md-6 col-lg-4">
                                                             <img [src]="img" heigth="90" alt="" class="img-fluid w-100">
                                                         </div>
@@ -132,7 +132,7 @@
                                             </mat-menu>
                                         }
                                     </td>
-                                    <td class="align-middle text-center text-wrap text__theme__dark__p">{{ event.event_title }}</td>
+                                    <td class="align-middle text-start text-wrap text__theme__dark__p">{{ event.event_title }}</td>
                                     <td class="align-middle text-center text__theme__dark__p">{{ event.type_event }}</td>
                                     <td class="align-middle white-space-nowrap text-center pe-0">
                                         <button [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
@@ -176,15 +176,13 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- @if(list_len > 0){ -->
-                    <div class="text-end mt-3">
-                        <pagination-controls
-                        [responsive]="true"
-                        previousLabel="Précédent"
-                        nextLabel="Suivant"
-                        (pageChange)="p = $event"></pagination-controls>
-                    </div>
-                <!-- } -->
+                <div class="text-end mt-3">
+                    <pagination-controls
+                    [responsive]="true"
+                    previousLabel="Précédent"
+                    nextLabel="Suivant"
+                    (pageChange)="p = $event"></pagination-controls>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>

@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
 
 import { ApiUrlService } from '../api-url/api-url.service';
+import {
+  CookieSecureService,
+} from '../secure/cookie-secure/cookie-secure.service';
 import { LsSecureService } from '../secure/ls-secure/ls-secure.service';
 
 @Injectable({
@@ -18,7 +22,9 @@ export class AuthService {
     constructor(
         private __http: HttpClient,
         private __apiUrl: ApiUrlService,
-        private __ls: LsSecureService
+        private __ls: LsSecureService,
+        private _cookie: CookieSecureService,
+        private _router: Router
     ) { }
 
 // __--__ 🍀🍀__-   🍀 START ENDPOINT BODY XHR 🍀   -__ 🍀🍀__--__//
@@ -66,7 +72,9 @@ export class AuthService {
                     {
                         next: (resp: any)=>{
                             if(resp.code == 100){
-                                result = true;
+                                this._cookie.clearAll();
+                                this.__ls.cleanSession();
+                                this._router.navigate(['/web-admin.connexion']);
                             }
                         },error: (_err: any)=>{
                             result = false;

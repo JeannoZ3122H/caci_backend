@@ -95,6 +95,7 @@ export class CuEventComponent implements OnInit, OnDestroy {
     );
     public is_upload_file: string | ArrayBuffer | null = '';
     editor!: Editor;
+    html = '';
     config = {
         locals: {
             // menu
@@ -216,12 +217,14 @@ export class CuEventComponent implements OnInit, OnDestroy {
                         event_description: data.event_description,
                         type_event: data.type_event_id,
                         event_title: data.event_title,
-                        event_img: null,
+                        event_img: data.event_img,
                     }
                 );
+                this.html = data.event_description;
                 this.item_type_event_id = data.type_event_id;
                 this.imgUploadList = JSON.parse(data.event_img);
                 this.itemId = data.id;
+
             }
             this.getListTypeEvent();
         }
@@ -254,13 +257,13 @@ export class CuEventComponent implements OnInit, OnDestroy {
     addNewItem() {
         const formData = new FormData;
         formData.append('type_event_id', this.forms.value.type_event);
-        formData.append('description', this.forms.value.event_description);
+        formData.append('description', this.html);
         formData.append('title', this.forms.value.event_title);
         for(let i = 0; i < this.selectedFiles.length; i++){
             const name = "event_img_"+i;
             formData.append(name, this.selectedFiles[i], this.selectedFiles[i].name);
         }
-        formData.append('author', this.author);
+        formData.append('author_id', this.author);
 
         this.unscribe.add(
             this._request.add(formData).subscribe(
@@ -288,13 +291,17 @@ export class CuEventComponent implements OnInit, OnDestroy {
     editCurrentItem() {
         const formData = new FormData;
         formData.append('type_event_id', this.forms.value.type_event);
-        formData.append('description', this.forms.value.event_description);
+        formData.append('description', this.html);
         formData.append('title', this.forms.value.event_title);
-        for(let i = 0; i < this.selectedFiles.length; i++){
-            const name = "event_img_"+i;
-            formData.append(name, this.selectedFiles[i], this.selectedFiles[i].name);
+        if(this.selectedFiles.length > 0){
+            for(let i = 0; i < this.selectedFiles.length; i++){
+                const name = "event_img_"+i;
+                formData.append(name, this.selectedFiles[i], this.selectedFiles[i].name);
+            }
+        }else{
+            formData.append('old_files', this.forms.value.event_img);
         }
-        formData.append('author', this.author);
+        formData.append('author_id', this.author);
 
         this.unscribe.add(
             this._request.update(formData, this.data.content.slug).subscribe(
@@ -322,7 +329,7 @@ export class CuEventComponent implements OnInit, OnDestroy {
 
 
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 START EVENT 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
-     //
+    //
     stepIs(step: number){
         if(step){
             if(this.localStorage){
@@ -403,7 +410,7 @@ export class CuEventComponent implements OnInit, OnDestroy {
                     this._message.showError({status: "Attention", message: "Veuillez sélectionner uniquement des images."});
                 }
             }
-            if(status ==  this.selectedFiles.length){
+            if(status == this.selectedFiles.length){
                 this.checkFilesSizes(e);
             }
         }
@@ -436,6 +443,15 @@ export class CuEventComponent implements OnInit, OnDestroy {
                 type_event: this.forms.value.type_event,
                 event_title: this.forms.value.event_title,
                 event_img: JSON.stringify(this.selectedFiles)
+            });
+        }else{
+            e.target.value = '';
+            this.selectedFiles = [];
+            this.forms.setValue({
+                event_description: this.forms.value.event_description,
+                type_event: this.forms.value.type_event,
+                event_title: this.forms.value.event_title,
+                event_img: null
             });
         }
     }

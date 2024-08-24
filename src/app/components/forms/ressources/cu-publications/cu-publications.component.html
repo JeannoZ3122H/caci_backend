@@ -1,0 +1,152 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab (click)="close()" [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter un partenaire':'Modifier un partenaire' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content class="px-1 pt-0 mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg">
+        <mat-card-content>
+            <form [formGroup]="forms">
+                <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" #tabGroupContent>
+                    <mat-tab label="First">
+                        <ng-template mat-tab-label>
+                            @if(forms.get('type_file')?.value == true){
+                                <mat-icon class="example-tab-icon me-2">looks_one</mat-icon>
+                            }
+                            Informations
+                        </ng-template>
+                        <ng-container>
+                            <div class="row justify-content-between mt-2">
+                                <div class="col-lg-12 col-12">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Choisissez un type de publication</mat-label>
+                                        <mat-select formControlName="type_publication_id">
+                                            <mat-option *ngFor="let type_publication of list_type_publication"
+                                            [value]="type_publication.id">{{ type_publication.type_publication }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-12 mb-3 text-center col-12">
+                                    <mat-radio-group formControlName="type_file"
+                                        aria-label="Selectionner un format de publication">
+                                        <mat-radio-button mat-raised-button color="primary" (click)="goToNextTab()" [value]="true">Joindre un document</mat-radio-button>
+                                        <mat-radio-button mat-raised-button color="primary" [value]="false">Joindre un site</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                                @if(forms.get('type_file')?.value == false){
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer le libellé</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="libelle" type="text"
+                                            matInput placeholder="Veuillez entrer le libellé">
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer votre url d'un site</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="url" type="url" matInput placeholder="Veuillez entrer votre url">
+                                            <mat-icon matSuffix>link</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                }
+                            </div>
+                        </ng-container>
+                    </mat-tab>
+                    @if(forms.get('type_file')?.value == true){
+                        <mat-tab label="Second">
+                            <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon me-2">looks_two</mat-icon>
+                                Documents
+                            </ng-template>
+                            <ng-container>
+                                <div class="row justify-content-center mt-3">
+                                    <div [class]="'col-12 mb-3'" *ngIf="forms.invalid">
+                                        <mat-divider></mat-divider>
+                                        <p [class]="'text-center mb-0'">
+                                            <strong>NB</strong>:
+                                            <code>Veuillez prendre soin de bien remplir tout les champs du formulaire s'ils vous plaît !</code>
+                                        </p>
+                                        <mat-divider></mat-divider>
+                                    </div>
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer le libellé</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="libelle" type="text"
+                                            matInput placeholder="Veuillez entrer le libellé">
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row justify-content-center mt-3">
+                                        <div *ngIf="form_type == 'edit'" class="col-lg-4 col-6">
+                                            <iframe [src]="pdfUrl" width="300px" height="400px"></iframe>
+                                        </div>
+                                        <div (click)="file.click()" [class]="form_type == 'edit'?'col-lg-8 col-6 py-2 row justify-content-center':'col-10 py-2 row justify-content-center'"
+                                        [style]="files">
+                                            <input #file accept=".pdf,.doc,.docx" formControlName="url_file" (change)="onFileChange($event)" hidden class="text__theme__dark__p" type="file">
+                                            <div class="col-12">
+                                                <p [class]="pdfUrl?'text-center text-white':'text-center'">
+                                                    <strong>
+                                                        {{ pdfUrl?'Cliquez pour changer de document':'Cliquez pour charger un document' }}
+                                                    </strong>
+                                                    <code>(.pdf/.txt/excel)<sup>*</sup></code>
+                                                </p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                @if(status_bar == "0"){
+                                                    <button type="button" class="shadow-none" mat-fab color="default">
+                                                        <mat-icon>file_upload</mat-icon>
+                                                    </button>
+                                                }@else{
+                                                    <button type="button" class="shadow-none" mat-fab color="default">
+                                                        <b>{{ status_bar+"%" }}</b>
+                                                    </button>
+                                                }
+                                            </div>
+                                            @if(status_bar != "0"){
+                                                <div class="col-12 text-center">
+                                                    <div class="progress mb-1" style="height: 2px;">
+                                                        <div class="progress-bar" role="progressbar" aria-label="Example 1px high" [style]="'width: '+status_bar+'%'" [attr.aria-valuenow]="status_bar"
+                                                        aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <div class="progress" style="height: 14px;">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                        role="progressbar" aria-label="Animated striped example"
+                                                        [attr.aria-valuenow]="status_bar" aria-valuemin="0" aria-valuemax="100" [style]="'width: '+status_bar+'%'"></div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                    }
+                </mat-tab-group>
+                <div class="text-center mt-3">
+                    @if(form_type == 'add'){
+                        <button (click)="addNewItem()" [disabled]="forms.invalid && !pdfUrl" mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Enregistrer
+                        </button>
+                    }@else{
+                        <button (click)="editCurrentItem()" [disabled]="forms.invalid && !pdfUrl" mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Modifier
+                        </button>
+                    }
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

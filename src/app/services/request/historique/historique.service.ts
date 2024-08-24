@@ -31,15 +31,27 @@ export class HistoriqueService {
 
 // __--__ 🍀🍀__-   🍀 START ENDPOINT BODY XHR 🍀   -__ 🍀🍀__--__//
 
+    // 🍀🍀__-  Add New In List 🍀
+        add(data: any) {
+            let url = this.__apiUrl.apiUrl + "add_new_historique";
+            return this.__http.post(url, data, this.__apiUrl.getHeaders());
+        }
+
+    // 🍀🍀__-  Update In List 🍀
+        update(data: any, slg: string) {
+            let url = this.__apiUrl.apiUrl + `update_current_historique/${slg}`;
+            return this.__http.post(url, data, this.__apiUrl.getHeaders());
+        }
+
     // 🍀🍀__-  Get All List Historic 🍀
         get() {
-            let url = this.__apiUrl.apiUrl + "get_list_historic";
+            let url = this.__apiUrl.apiUrl + "get_list_historiques";
             return this.__http.get(url, this.getHeaders());
         }
 
     // 🍀🍀__-  Delete Historic In List 🍀
         delete(slg: string) {
-            let url = this.__apiUrl.apiUrl + `delete_current_historic/${slg}`;
+            let url = this.__apiUrl.apiUrl + `delete_current_historique/${slg}`;
             return this.__http.delete(url, this.getHeaders());
         }
 // __--__ 🍀🍀__-   🍀 END ENDPOINT BODY XHR 🍀   -__ 🍀🍀__--__//

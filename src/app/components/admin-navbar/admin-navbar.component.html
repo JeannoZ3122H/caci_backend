@@ -347,10 +347,23 @@
                         </li>
                         <!-- <liui> -->
                         <li class="nav-item dropdown border-end border-light">
-                            <a class="nav-link lh-1" role="button">
+                            <a [matMenuTriggerFor]="settingMenu" class="nav-link lh-1" role="button">
                                 <span class="uil fs-8 me-2 uil-setting"></span>
                                 Paramètres
                             </a>
+                            <mat-menu #settingMenu="matMenu">
+                                @for (nav of setting_menu_list; track $index) {
+                                    <mat-list-item class="fw-bolder mat__list__item text-start"
+                                        [routerLink]="nav.route" routerLinkActive="active"
+                                        [routerLinkActiveOptions]="{exact: false}"
+                                    >
+                                        <button class="fw-bolder mat__list__item__button w-100 py-2 mat-elevation-z8" mat-button>
+                                            <mat-icon [fontIcon]="nav.icon"></mat-icon>
+                                            {{ nav.nav_item }}
+                                        </button>
+                                    </mat-list-item>
+                                }
+                            </mat-menu>
                         </li>
                     </ul>
                 </div>

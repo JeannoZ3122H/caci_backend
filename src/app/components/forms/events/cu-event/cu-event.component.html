@@ -49,6 +49,7 @@
                                         [colorPresets]="colorPresets" [toolbar]="toolbar"> </ngx-editor-menu>
                                         <ngx-editor
                                             [editor]="editor"
+                                            [(ngModel)]="html"
                                             formControlName="event_description"
                                             [placeholder]="'Veuillez entrer la description'"
                                         ></ngx-editor>
@@ -72,7 +73,7 @@
                                             @for (img of imgUploadList; track $index) {
                                                 <div class="col-lg-3 col-md-4 col-6">
                                                     <mat-card>
-                                                        <img mat-card-image [src]="img.src" class="img-fluid" alt="Fichier chargé">
+                                                        <img mat-card-image [src]="img.src?img.src:img" class="img-fluid" alt="Fichier chargé">
                                                     </mat-card>
                                                 </div>
                                             }
@@ -87,7 +88,7 @@
                                         <mat-card (click)="file.click()" class="p-3" style="border: 2px dotted gray">
                                             <div class="text-center" style="width: 300px !important">
                                                 <p style="border: 2px dotted gray" class="text__theme__dark__p px-2 py-3 mb-2">
-                                                    {{ is_upload_file != '' || null?"Veuillez cliquer à nouveau pour charger et modifier les/l'illustration(s)":"Veuillez cliquer pour charger les/l'illustration(s)" }}
+                                                    {{ (is_upload_file != '' || null) || (imgUploadList.length > 0)?"Veuillez cliquer à nouveau pour charger et modifier les/l'illustration(s)":"Veuillez cliquer pour charger les/l'illustration(s)" }}
                                                 </p>
                                                 <button color="default" type="button" mat-fab>
                                                     <mat-icon class="">file_upload</mat-icon>

@@ -1,0 +1,114 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'"
+    [color]="form_type == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ form_type == 'add'?'Ajouter de contenu organisation':'Modifier de contenu organisation' }}
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div class="px-1 overflow-hidden overflow-y-scroll mat__custumer__container__bg">
+    <form [formGroup]="forms">
+        <mat-tab-group animationDuration="1000ms" mat-stretch-tabs="false" mat-align-tabs="center">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon">looks_one</mat-icon>
+                    Informations
+                </ng-template>
+                <ng-container>
+                    <mat-card class="mat__custumer__card__bg">
+                        <mat-card-content>
+                            <div class="row justify-content-center mt-2">
+                                <div class="row justify-content-center col-12">
+                                    <div class="col-12 col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer votre le titre</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="title" type="text" matInput placeholder="titre">
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 col-lg-6">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer votre le sous titre</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="sub_title" type="text" matInput placeholder="sous titre">
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <mat-divider class="my-3"></mat-divider>
+                                    <div class="row justify-content-center">
+                                        @if(is_upload_file != '' || null){
+                                            <div class="col-lg-8 col-8 mb-3">
+                                                <mat-card style="width: 400px !important">
+                                                    <img mat-card-image [src]="is_upload_file" class="img-fluid" alt="Fichier chargé">
+                                                </mat-card>
+                                            </div>
+                                        }
+                                        <div class="col-lg-4 col-6 mb-3">
+                                            <mat-card (click)="file.click()" style="border: 2px dotted gray">
+                                                <mat-card-content>
+                                                    <div class="">
+                                                        <input accept="image/*" #file hidden formControlName="files" (change)="uploadFile($event)" class="form-control text__theme__dark__p" type="file" id="id">
+                                                    </div>
+                                                    <div style="cursor: pointer" class="text-center">
+                                                        <p class="text__theme__dark__p">
+                                                            {{ is_upload_file != '' || null?"Veuillez cliquer à nouveau pour charger et modifier l'illustration":"Veuillez cliquer pour charger l'illustration" }}
+                                                        </p>
+                                                        <p class="shadow-none">
+                                                            <mat-icon class="icoo-floating">upload_file</mat-icon>
+                                                        </p>
+                                                    </div>
+                                                </mat-card-content>
+                                            </mat-card>
+                                        </div>
+                                    </div>
+                                    <mat-divider class="my-3"></mat-divider>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </ng-container>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon">looks_two</mat-icon>
+                    Descriptions du contenu
+                </ng-template>
+                <ng-container>
+                    <div class="NgxEditor__Wrapper" style="max-height: 100%; height: 400px">
+                        <ngx-editor-menu [toolbar]="toolbar"
+                        [colorPresets]="colorPresets" [editor]="editor"> </ngx-editor-menu>
+                        <ngx-editor
+                            [editor]="editor"
+                            formControlName="description"
+                            [placeholder]="'Entrer la description ici...'"
+                        ></ngx-editor>
+                    </div>
+                </ng-container>
+            </mat-tab>
+        </mat-tab-group>
+        <div class="text-center">
+            @if(form_type == 'add'){
+                <button [disabled]="forms.invalid" (click)="addNewItem()"
+                mat-fab extended color="primary">
+                    <mat-icon>save</mat-icon>
+                    Enregistrer
+                </button>
+            }@else{
+                <button [disabled]="forms.invalid" (click)="editCurrentItem()"
+                mat-fab extended color="primary">
+                    <mat-icon>edit_note</mat-icon>
+                    Modifier
+                </button>
+            }
+        </div>
+    </form>
+</div>
