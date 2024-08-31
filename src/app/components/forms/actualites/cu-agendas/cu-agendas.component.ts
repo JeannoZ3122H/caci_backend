@@ -28,6 +28,7 @@ import {
   schema,
   Toolbar,
 } from 'ngx-editor';
+import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import {
   Plugin,
@@ -41,9 +42,13 @@ import {
 } from 'rxjs';
 
 import { MaterialModule } from '../../../../material-module';
+import { AuthService } from '../../../../services/auth/auth.service';
 import {
-  PartnersService,
-} from '../../../../services/request/admin/partners/partners.service';
+  ActualiteService,
+} from '../../../../services/request/actualite/actualite.service';
+import {
+  TypeEventsService,
+} from '../../../../services/request/type-events/type-events.service';
 import {
   LsSecureService,
 } from '../../../../services/secure/ls-secure/ls-secure.service';
@@ -62,6 +67,7 @@ const plugin = new Plugin({
         FormsModule,
         CommonModule,
         NgxEditorModule,
+        NgxMatTimepickerModule,
     ],
     templateUrl: './cu-agendas.component.html',
     styleUrl: './cu-agendas.component.css'
@@ -80,13 +86,23 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         price: FormControl<string | any>,
         title_event: FormControl<string | any>,
         description_event: FormControl<string | any>,
+        hours_start_event: FormControl<string | any>,
+        hours_end_event: FormControl<string | any>,
         date_start_event: FormControl<string | any>,
         date_end_event: FormControl<string | any>,
         status_enter_event: FormControl<string | any>,
         address_event: FormControl<string | any>,
         localisation_event: FormControl<string | any>,
+        type_event_id: FormControl<string | any>,
+        google_meet_url: FormControl<string | any>,
         illusration_event: FormControl<File | any>
     }>({
+        type_event_id: new FormControl('', [
+            Validators.minLength(1)
+        ]),
+        google_meet_url: new FormControl('', [
+            Validators.minLength(4),
+        ]),
         price: new FormControl('', [
             Validators.minLength(4)
         ]),
@@ -96,6 +112,12 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         ]),
         description_event: new FormControl('', [
             Validators.required,
+        ]),
+        hours_start_event: new FormControl('00:00', [
+            Validators.required, Validators.pattern(/^\d{2}:\d{2}$/)
+        ]),
+        hours_end_event: new FormControl('00:00', [
+            Validators.required, Validators.pattern(/^\d{2}:\d{2}$/)
         ]),
         date_start_event: new FormControl('', [
             Validators.required,
@@ -148,16 +170,19 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
     imageUrl: string | ArrayBuffer | null = null;
     public file!: File;
     files: any = 'border: 2px dotted gray;';
+    public list_type_events: any[] = [];
 
     constructor(
         private _message: ToastService,
-        private _request: PartnersService,
+        private _request: ActualiteService,
+        private _request_type_event: TypeEventsService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         @Inject(DOCUMENT) private _document: Document,
         @Inject(PLATFORM_ID) private _plateFromeID: Document,
         private _dialogRef: MatDialogRef<CuAgendasComponent>,
         private _loading: NgxUiLoaderService,
         private _ls: LsSecureService,
+        private _auth: AuthService
     ) { }
 
     ngOnInit(): void {
@@ -177,9 +202,13 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                         description_event: data.description_event,
                         date_start_event: data.date_start_event,
                         date_end_event: data.date_end_event,
-                        status_enter_event: data.status_enter_event,
+                        status_enter_event: JSON.parse(data.status_enter_event),
                         address_event: data.address_event,
                         localisation_event: data.localisation_event,
+                        type_event_id: data.type_event_id,
+                        google_meet_url: data.google_meet_url,
+                        hours_start_event: "00:00",
+                        hours_end_event: "00:00",
                         price: data.price,
                         illusration_event: null,
                     }
@@ -190,7 +219,8 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     background: linear-gradient(190deg, rgba(4,19,61,0.5844931722689075) 12%, rgba(4,19,61,0.248358718487395) 64%), url('${this.imageUrl}')no-repeat center center;
                     background-size: 80%`;
                 this.itemId = data.id;
-            }
+            };
+            this.getListTypeEvent();
         }
     }
 
@@ -207,13 +237,17 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         formData.append('date_end_event', this.forms.get('date_end_event')?.value);
         formData.append('status_enter_event', this.forms.get('status_enter_event')?.value);
         formData.append('address_event', this.forms.get('address_event')?.value);
+        formData.append('hours_start_event', this.forms.get('hours_start_event')?.value);
+        formData.append('hours_end_event', this.forms.get('hours_end_event')?.value);
         formData.append('localisation_event', this.forms.get('localisation_event')?.value);
+        formData.append('type_event_id', this.forms.get('type_event_id')?.value);
+        formData.append('google_meet_url', this.forms.get('google_meet_url')?.value);
         formData.append('price', this.forms.get('price')?.value);
         formData.append('illusration_event', this.file);
 
         this._loading.start();
         this.unscribe.add(
-            this._request.add(formData).subscribe(
+            this._request.addAgenda(formData).subscribe(
                 {
                     next: (resp: any) => {
                         if (resp.code == 100) {
@@ -230,7 +264,9 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     },
                     error: (err: any) => {
                         this._loading.stop();
-                        console.log('server', err)
+                        if(err.status == 401){
+                            this._auth.autoLogOut();
+                        }
                     },
                 }
             )
@@ -246,12 +282,16 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
         formData.append('date_end_event', this.forms.get('date_end_event')?.value);
         formData.append('status_enter_event', this.forms.get('status_enter_event')?.value);
         formData.append('address_event', this.forms.get('address_event')?.value);
+        formData.append('hours_start_event', this.forms.get('hours_start_event')?.value);
+        formData.append('hours_end_event', this.forms.get('hours_end_event')?.value);
         formData.append('localisation_event', this.forms.get('localisation_event')?.value);
+        formData.append('type_event_id', this.forms.get('type_event_id')?.value);
+        formData.append('google_meet_url', this.forms.get('google_meet_url')?.value);
         formData.append('price', this.forms.get('price')?.value);
         formData.append('illusration_event', this.file);
         this._loading.start();
         this.unscribe.add(
-            this._request.update(formData, this.data.content.slug).subscribe(
+            this._request.updateAgenda(formData, this.data.content.slug).subscribe(
                 {
                     next: (resp: any) => {
                         if (resp) {
@@ -273,11 +313,33 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     },
                     error: (err: any) => {
                         this._loading.stop();
-                        console.log('server', err)
+                        if(err.status == 401){
+                            this._auth.autoLogOut();
+                        }
                     },
                 }
             )
         );
+    }
+    //
+    getListTypeEvent(){
+        this.unscribe.add(
+            this._request_type_event.get().subscribe(
+                {
+                    next: (resp: any) => {
+                        if (resp) {
+                            this.list_type_events = resp;
+                        }
+                    },
+                    error: (err: any) => {
+                        this._loading.stop();
+                        if(err.status == 401){
+                            this._auth.autoLogOut();
+                        }
+                    }
+                }
+            )
+        )
     }
 
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 END REQUEST 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
@@ -315,11 +377,15 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                         title_event: this.forms.value.title_event,
                         price: this.forms.value.price,
                         description_event: this.forms.value.description_event,
+                        hours_start_event: this.forms.value.hours_start_event,
+                        hours_end_event: this.forms.value.hours_end_event,
                         date_start_event: this.forms.value.date_start_event,
                         date_end_event: this.forms.value.date_end_event,
                         status_enter_event: this.forms.value.status_enter_event,
                         address_event: this.forms.value.address_event,
                         localisation_event: this.forms.value.localisation_event,
+                        type_event_id: this.forms.value.type_event_id,
+                        google_meet_url: this.forms.value.google_meet_url,
                         illusration_event: null,
                     }
                     localStorage.setItem('ag__fs__data', JSON.stringify(data));
@@ -339,10 +405,13 @@ export class CuAgendasComponent implements OnInit, OnDestroy {
                     date_end_event: data.date_end_event,
                     status_enter_event: data.status_enter_event,
                     address_event: data.address_event,
+                    hours_start_event: data.hours_start_event,
+                    hours_end_event: data.hours_end_event,
                     localisation_event: data.localisation_event,
+                    type_event_id: data.type_event_id,
+                    google_meet_url: data.google_meet_url,
                     illusration_event: null,
-                }
-                );
+                });
             }
         }
     }

@@ -28,11 +28,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-import {
-  NgxMatDatetimePickerModule,
-  NgxMatNativeDateModule,
-} from '@angular-material-components/datetime-picker';
-
 @NgModule({
     exports: [
         // cdk
@@ -66,8 +61,6 @@ import {
         MatCheckboxModule,
         MatStepperModule,
         MatExpansionModule,
-        NgxMatDatetimePickerModule,       // <-------
-        NgxMatNativeDateModule,
 
     ],
 })

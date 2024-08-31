@@ -25,6 +25,9 @@ import { Subscription } from 'rxjs';
 import { MaterialModule } from '../../material-module';
 import { AuthService } from '../../services/auth/auth.service';
 import {
+  TypeServicesService,
+} from '../../services/request/type-services/type-services.service';
+import {
   CookieSecureService,
 } from '../../services/secure/cookie-secure/cookie-secure.service';
 import {
@@ -53,7 +56,7 @@ import {
 export class AdminNavbarComponent implements OnInit, OnDestroy{
 
     @ViewChild('drawer') drawer!: MatSidenav;
-    sidebar_menu_list: any[] = [
+    public sidebar_menu_list: any[] = [
         {
             id: 1,
             category: 'Generalité',
@@ -71,14 +74,14 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_list: false
         },
         {
-            id: 2,
+            id: 3,
             nav_item: 'NewsLetter',
             icon: 'mark_email_unread',
             route: ['/web-admin.newsletters'],
             nav_list: false
         },
         {
-            id: 3,
+            id: 4,
             category: 'Compte',
             nav_item: 'Admin',
             icon_category: 'manage_accounts',
@@ -87,14 +90,14 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_list: false
         },
         {
-            id: 3,
+            id: 5,
             nav_item: 'Personnel',
             icon: 'person',
             route: ['/web-admin.account-teams-us'],
             nav_list: false
         },
         {
-            id: 4,
+            id: 6,
             category: 'À propos',
             nav_item: 'Historique',
             icon_category: 'service_toolbox',
@@ -103,48 +106,53 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             nav_list: false
         },
         {
-            id: 5,
+            id: 7,
             nav_item: 'Missions',
             icon: 'auto_stories',
             route: ['/web-admin.about-missions'],
             nav_list: false
         },
         {
-            id: 5,
+            id: 8,
             nav_item: 'Organisations',
             icon: 'auto_stories',
             route: ['/web-admin.about-organisations'],
             nav_list: false
         },
         {
-            id: 4,
+            id: 0,
             category: 'Services',
-            nav_item: 'Arbitrage',
-            icon_table: ['gavel', 'auto_stories', 'assured_workload', 'book_2'],
             icon_category: 'service_toolbox',
-            icon: 'gavel',
-            route: ['/web-admin.service-arbitrage'],
+            nav_list: false
+        },
+        {
+            id: 4,
+            category: 'Infos pratiques',
+            nav_item: 'Soumettre dossier',
+            icon_category: 'file',
+            icon: 'info',
+            route: ['/web-admin.informations-pratiques-guide'],
             nav_list: false
         },
         {
             id: 5,
-            nav_item: 'Médiation',
-            icon: 'auto_stories',
-            route: ['/web-admin.service-mediation'],
+            nav_item: 'Calculateurs de frais',
+            icon: 'calculate',
+            route: ['/web-admin.informations-pratiques-calculateur-frais'],
             nav_list: false
         },
         {
             id: 5,
-            nav_item: 'Expertise',
-            icon: 'assured_workload',
-            route: ['/web-admin.service-expertise'],
+            nav_item: 'Comment devenir',
+            icon: 'help',
+            route: ['/web-admin.informations-pratiques-comment-devenir'],
             nav_list: false
         },
         {
             id: 5,
-            nav_item: 'Formation',
-            icon: 'book_2',
-            route: ['/web-admin.service-formation'],
+            nav_item: 'Faq',
+            icon: 'quiz',
+            route: ['web-admin.informations-pratiques-faq'],
             nav_list: false
         },
         {
@@ -285,11 +293,13 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
         private __dialog: MatDialog,
         private __message: ToastService,
         private __request: AuthService,
+        private __request_type_service: TypeServicesService,
         @Inject(PLATFORM_ID) private __plateformeId: Object,
         @Inject(DOCUMENT) private document: any,
         private __localStorage: LsSecureService,
         private __loading: NgxUiLoaderService,
         private __coockie: CookieSecureService,
+        private _auth: AuthService
     ){
         if(isPlatformBrowser(this.__plateformeId) || isPlatformServer(this.__plateformeId)){
             if (typeof window !== "undefined") {
@@ -309,12 +319,47 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
         const data = this.__localStorage.getDataToStorage();
         if(data){
             this.user = data;
+            this.unscribe.add(
+                this.__request_type_service.get().subscribe(
+                    {
+                        next: (resp: any) => {
+                            if(resp){
+                                let list = resp;
+                                list.forEach((el: any, indx: number) => {
+                                    let data: any = {
+                                        id: el.id,
+                                        nav_item: el.type_service,
+                                        icon: this.getIcon(el),
+                                        route: ['/web-admin.service', el.type_service_code, el.type_service],
+                                        nav_list: false
+                                    };
+                                    list[indx] = data;
+                                });
+
+                                this.sidebar_menu_list.forEach((el: any, indx: number)=>{
+                                    if(el.id == 0){
+                                        resp.forEach((el: any) => {
+                                            this.sidebar_menu_list.splice(indx+1, 0, el);
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        error: (err: any) => {
+                            this.__loading.stop();
+                            if(err.status == 401){
+                                this._auth.autoLogOut();
+                            }
+                        }
+                    }
+                )
+            );
         }
     }
 
 
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 START REQUEST 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
-    // logOut ---__ 🍀🍀
+    //-_-// 🍀🍀
     logOut(){
         const _dialog = this.__dialog.open(AlerteComponent,
             {
@@ -363,7 +408,7 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 END REQUEST 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
 
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 START EVENTS 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
-    // ---__ 🍀🍀
+    //-_-// 🍀🍀
     changeTheme(theme: any){
         if(isPlatformBrowser(this.__plateformeId) || isPlatformServer(this.__plateformeId)){
             this.document.defaultView?.localStorage.setItem('phoenixTheme', theme);
@@ -386,7 +431,7 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
             }, 100);
         }
     }
-    // ---__ 🍀🍀
+    //-_-// 🍀🍀
     checkCurrentTheme(){
         if(isPlatformBrowser(this.__plateformeId) || isPlatformServer(this.__plateformeId)){
             setInterval(()=>{
@@ -396,6 +441,25 @@ export class AdminNavbarComponent implements OnInit, OnDestroy{
                 }
             }, 100)
         }
+    }
+    //-_-// 🍀🍀
+    getIcon (el: any): any{
+        let icon = "";
+        el.type_service = (el.type_service).toLowerCase();
+        el.type_service = (el.type_service).replace('é', 'e');
+        el.type_service = (el.type_service).replace('è', 'e');
+        el.type_service = (el.type_service).replace('ê', 'e');
+
+        if(el.type_service == "arbitrage" || el.type_service == "arbitrages"){
+            icon = "gavel";
+        }else if(el.type_service == "mediation" || el.type_service == "mediations"){
+            icon = "auto_stories";
+        }else if(el.type_service == "expertise" || el.type_service == "expertises"){
+            icon = "assured_workload";
+        }else if(el.type_service == "formation" || el.type_service == "formations"){
+            icon = "book_2";
+        }
+        return icon;
     }
 // __------__ 🍀🍀🍀🍀🍀__---   🍀 END EVENTS 🍀   ---__ 🍀🍀🍀🍀🍀__------__//
 

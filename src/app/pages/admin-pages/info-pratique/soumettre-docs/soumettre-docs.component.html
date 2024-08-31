@@ -10,7 +10,7 @@
                         15.7197C7 14.7699 6.23008 14 5.28033 14H5C4.06808 14 3.28503 14.6374
                         3.06301 15.5" stroke="#3f51b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Liste des agendas d'évènements
+                comment soumettre un dossier ?
             </h2>
         </div>
         <div id="bulk-select-replace-element" class>
@@ -35,40 +35,7 @@
     </div>
 
     <div id="tableExample">
-        <mat-card class="table-info mat__custumer__container__bg">
-
-            <button matTooltip="Cliquez pour plus d'infos" color="default" mat-mini-fab
-            class="table-info-icon" [matMenuTriggerFor]="menu3">
-                <mat-icon class="text__theme">info</mat-icon>
-            </button>
-            <mat-menu #menu3="matMenu">
-                <div mat-menu-item>
-                    <mat-list class="px-0">
-                        <mat-list-item class="d-flex pe-0">
-                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
-                            fontIcon="more_horiz"></mat-icon>
-                            <div class="text-wrap">
-                                <small class="ms-2"> Voir les options de chaque élément</small>
-                            </div>
-                        </mat-list-item>
-                        <mat-list-item class="d-flex pe-0">
-                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
-                            fontIcon="edit"></mat-icon>
-                            <div class="text-wrap">
-                                <small class="ms-2"> Pour modifier l'élément du tableau </small>
-                            </div>
-                        </mat-list-item>
-                        <mat-list-item class="d-flex pe-0">
-                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
-                            fontIcon="delete"></mat-icon>
-                            <div class="text-wrap">
-                                <small class="ms-2"> Pour supprimer l'élément du tableau </small>
-                            </div>
-                        </mat-list-item>
-                    </mat-list>
-                </div>
-            </mat-menu>
-
+        <mat-card class="mat__custumer__container__bg">
             <mat-card-content>
                 <div class="table-responsive mx-n1 px-1">
                     <table class="table table-bordered table-sm border-top border-translucent fs-9 mb-0">
@@ -81,17 +48,15 @@
                                     </div>
                                 </th>
                                 <th class="sort align-middle ps-3 fst-italic">#ID</th>
-                                <th class="sort align-middle ps-3">Évènment</th>
-                                <th class="sort align-middle ps-3">Programmation</th>
-                                <th class="sort align-middle ps-3">Type d'évènement</th>
-                                <th class="sort align-middle ps-3">Statut</th>
+                                <th class="sort align-middle ps-3">Illustrations</th>
+                                <th class="sort align-middle ps-3">Intitulé</th>
                                 <th class="sort text-center align-middle pe-0" scope="col">ACTION</th>
                             </tr>
                         </thead>
                         <tbody class="" id="bulk-select-body">
 
                             @defer{
-                                @for (agenda of list_agendas | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                                @for (soumettre of list_soumettre | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
                                     <tr>
                                         <td class="white-space-nowrap ps-2 fs-9 align-middle ps-0">
                                             <div class="form-check mb-0 text-center fs-8">
@@ -100,46 +65,44 @@
                                         </td>
                                         <td class="align-middle email text__theme__dark__p">{{ $index+1 }}</td>
                                         <td class="align-middle ps-3 name">
-                                            <div class="text-justify">
-                                                <mat-card class="shadow-none mat__custumer__container__bg mat-elevation-z0">
-                                                    <mat-card-header class="p-0">
-                                                        <div style="cursor: pointer !important" mat-card-avatar
-                                                            matTooltip="Cliquez pour voir en grand échelle" [matMenuTriggerFor]="menu2"
-                                                            [style]="userImg(agenda.illusration_event)" class="example-header-image mb-0">
-                                                        </div>
-                                                        <mat-card-subtitle class="text__theme__dark__p">{{ agenda.title_event }}</mat-card-subtitle>
-                                                    </mat-card-header>
-                                                </mat-card>
-                                                <mat-menu #menu2="matMenu" class="m-0 p-0">
-                                                    <img [src]="agenda.illusration_event" alt="" class="img-fluid w-100">
-                                                </mat-menu>
-                                            </div>
+                                            @if (soumettre.illustration) {
+                                                <div class="text-justify">
+                                                    <mat-card class="shadow-none mat__custumer__container__bg mat-elevation-z0">
+                                                        <mat-card-header class="p-0">
+                                                            <div style="cursor: pointer !important"  mat-card-avatar matTooltip="Cliquez pour voir en grand échelle"
+                                                            [matMenuTriggerFor]="menu2" [style]="userImg(soumettre.illustration)" class="example-header-image mb-0"></div>
+                                                            <!-- <mat-card-subtitle class="text__theme__dark__p">{{ soumettre.email }}</mat-card-subtitle> -->
+                                                        </mat-card-header>
+                                                    </mat-card>
+                                                    <mat-menu #menu2="matMenu" class="m-0 p-0">
+                                                        <img [src]="soumettre.illustration" alt="" class="img-fluid w-100">
+                                                    </mat-menu>
+                                                </div>
+                                            }@else{Aucune illustration}
                                         </td>
-                                        <td class="align-middle text-wrap text__theme__dark__p">
-                                            {{ agenda.date_start_event | date: 'dd-MM-yyyy' }} à {{ agenda.date_end_event | date: 'dd-MM-yyyy' }}
-                                        </td>
-                                        <td class="align-middle age text__theme__dark__p">
-                                            <button mat-raised-button color="default">
-                                                <mat-icon *ngIf="agenda.status_enter_event == 'false'" aria-hidden="false" fontIcon="payments"></mat-icon>
-                                                <mat-icon *ngIf="agenda.status_enter_event == 'true'" aria-hidden="false" fontIcon="toll"></mat-icon>
-                                                {{ agenda.status_enter_event == 'false'?'payant':'gratuit' }}
-                                            </button>
-                                        </td>
-                                        <td class="align-middle text-wrap text__theme__dark__p">
-                                            {{ agenda.type_event }}
-                                        </td>
+                                        <td class="align-middle ps-3 name text-start text-wrap">{{ soumettre.libelle }}</td>
                                         <td class="align-middle white-space-nowrap text-center pe-0">
                                             <button [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
                                                 <mat-icon class="text__theme">more_horiz</mat-icon>
                                             </button>
                                             <mat-menu class="mat__custumer__card__bg" #menuAction="matMenu" xPosition="before">
                                                 <li mat-menu-item class="action__mat__list__item">
-                                                    <button (click)="editCurrentItem(agenda)" mat-button class="action__mat__list__item__button">
+                                                    <button (click)="joinDocument(soumettre)" mat-button class="action__mat__list__item__button">
+                                                        <mat-icon class="text__theme">join_left</mat-icon> <span class="ms-2 text__theme">Joindre document</span>
+                                                    </button>
+                                                </li>
+                                                <li mat-menu-item class="action__mat__list__item">
+                                                    <button (click)="showDetails(soumettre)" mat-button class="action__mat__list__item__button">
+                                                        <mat-icon class="text__theme">visibility</mat-icon> <span class="ms-2 text__theme">Afficher</span>
+                                                    </button>
+                                                </li>
+                                                <li mat-menu-item class="action__mat__list__item">
+                                                    <button (click)="editCurrentItem(soumettre)" mat-button class="action__mat__list__item__button">
                                                         <mat-icon class="text__theme">edit</mat-icon> <span class="ms-2 text__theme">Modifier</span>
                                                     </button>
                                                 </li>
                                                 <li mat-menu-item class="action__mat__list__item">
-                                                    <button (click)="delete(agenda.slug)" mat-button class="action__mat__list__item__button">
+                                                    <button (click)="delete(soumettre.slug)" mat-button class="action__mat__list__item__button">
                                                         <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
                                                     </button>
                                                 </li>
@@ -148,7 +111,7 @@
                                     </tr>
                                 }@empty {
                                     <tr>
-                                        <td colspan="7" class="text-center">
+                                        <td colspan="8" class="text-center">
                                             <mat-card class="shadow-none mat__custumer__card__bg">
                                                 <mat-card-content>
                                                     <svg width="50px" height="50px" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +126,7 @@
                                 }
                             }@placeholder{
                                 <tr>
-                                    <td colspan="7" class="text-center">
+                                    <td colspan="8" class="text-center">
                                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                                     </td>
                                 </tr>
@@ -172,7 +135,7 @@
                         </tbody>
                     </table>
                 </div>
-                @if(list_agendas.length > 0){
+                @if(list_soumettre.length > 0){
                     <div class="text-end mt-3">
                         <pagination-controls
                         [responsive]="true"
@@ -185,3 +148,4 @@
         </mat-card>
     </div>
 </div>
+

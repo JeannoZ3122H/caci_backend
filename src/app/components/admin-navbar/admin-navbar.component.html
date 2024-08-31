@@ -622,17 +622,16 @@
                             <span class="text-start">{{ item.category }}</span>
                         </button>
                     }
-
-                    <mat-list-item class="fw-bolder mat__list__item text-start"
+                    @if (item.nav_item) {
+                        <mat-list-item class="fw-bolder mat__list__item text-start"
                         [routerLink]="item.route" routerLinkActive="active"
-                        [routerLinkActiveOptions]="item.id == 1?{exact: true}:{exact: false}"
-                    >
-                        <button class="fw-bolder mat__list__item__button w-100 py-2 mat-elevation-z8" mat-button>
-                            <mat-icon >{{ item.icon }}</mat-icon>
-                            {{ item.nav_item  }}
-                        </button>
-                    </mat-list-item>
-
+                        [routerLinkActiveOptions]="item.id == 1?{exact: true}:{exact: false}">
+                            <button class="fw-bolder mat__list__item__button w-100 py-2 mat-elevation-z8" mat-button>
+                                <mat-icon >{{ item.icon }}</mat-icon>
+                                {{ item.nav_item  }}
+                            </button>
+                        </mat-list-item>
+                    }
                 </div>
             }
         </mat-nav-list>

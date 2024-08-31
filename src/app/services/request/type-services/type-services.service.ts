@@ -31,25 +31,25 @@ export class TypeServicesService {
 // __--__ 🍀🍀__-   🍀 START ENDPOINT BODY XHR 🍀   -__ 🍀🍀__--__//
 
     // 🍀🍀__-  Get 🍀
-        get() {
+        get = () => {
             let url = this.__apiUrl.apiUrl + "get_list_type_services";
             return this.__http.get(url, this.getHeaders());
         }
 
     // 🍀🍀__-  Add 🍀
-        add(data: any) {
+        add = (data: any) => {
             let url = this.__apiUrl.apiUrl + "add_new_type_service";
             return this.__http.post(url, data, this.getHeaders());
         }
 
     // 🍀🍀__-  Update 🍀
-        update(data: any, slg: string) {
+        update = (data: any, slg: string) => {
             let url = this.__apiUrl.apiUrl + `update_current_type_service/${slg}`;
             return this.__http.put(url, data, this.getHeaders());
         }
 
     // 🍀🍀__-  Delete 🍀
-        delete(slg: string) {
+        delete = (slg: string) => {
             let url = this.__apiUrl.apiUrl + `delete_current_type_service/${slg}`;
             return this.__http.delete(url, this.getHeaders());
         }

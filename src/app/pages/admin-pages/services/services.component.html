@@ -1,1 +1,170 @@
-<p>services works!</p>
+
+
+<div class="mat__custumer__container__bg">
+    <div class="d-flex align-items-center justify-content-between my-3">
+        <div class="ms-3" id="bulk-select-actions">
+            <h2 class="text-uppercase text-decoration-underline fw-bold">
+                <svg width="30px" height="30px" viewBox="0 0 24 24" class="icon"  version="1.1" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 7H3M5 11H3M20 15H3M15 19H3M21 7H19M21 11H19M10.6 11H13.4C13.9601 11 14.2401 11 14.454 10.891C14.6422
+                    10.7951 14.7951 10.6422 14.891 10.454C15 10.2401 15 9.96005 15 9.4V6.6C15 6.03995
+                    15 5.75992 14.891 5.54601C14.7951 5.35785 14.6422 5.20487 14.454 5.10899C14.2401 5
+                    13.9601 5 13.4 5H10.6C10.0399 5 9.75992 5 9.54601 5.10899C9.35785 5.20487 9.20487
+                    5.35785 9.10899 5.54601C9 5.75992 9 6.03995 9 6.6V9.4C9 9.96005 9 10.2401 9.10899
+                    10.454C9.20487 10.6422 9.35785 10.7951 9.54601 10.891C9.75992 11 10.0399 11 10.6
+                    11Z" stroke="#3f51b5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {{ type_content }}
+            </h2>
+        </div>
+        <div id="bulk-select-replace-element" class>
+            <button (click)="addNewItem()" mat-fab extended color="primary" class="btn btn-phoenix-success btn-sm" type="button">
+                <svg class="svg-inline--fa fa-plus"
+                    data-fa-transform="shrink-3 down-2" aria-hidden="true"
+                    focusable="false" data-prefix="fas" data-icon="plus" role="img"
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                    data-fa-i2svg style="transform-origin: 0.4375em 0.625em;">
+                    <g transform="translate(224 256)">
+                        <g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)">
+                            <path fill="currentColor"
+                                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
+                                transform="translate(-224 -256)">
+                            </path>
+                        </g>
+                    </g>
+                </svg>
+                <span class="ms-1">Ajouter</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="tableExample">
+        <mat-card class="table-info mat__custumer__container__bg">
+
+            <button matTooltip="Cliquez pour plus d'infos" color="default" mat-mini-fab
+            class="table-info-icon" [matMenuTriggerFor]="menu3">
+                <mat-icon class="text__theme">info</mat-icon>
+            </button>
+            <mat-menu #menu3="matMenu">
+                <div mat-menu-item>
+                    <mat-list class="px-0">
+                        <mat-list-item class="d-flex pe-0">
+                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
+                            fontIcon="more_horiz"></mat-icon>
+                            <div class="text-wrap">
+                                <small class="ms-2"> Voir les options de chaque élément</small>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item class="d-flex pe-0">
+                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
+                            fontIcon="visibility"></mat-icon>
+                            <div class="text-wrap">
+                                <small class="ms-2"> Voir le contenu l'élément</small>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item class="d-flex pe-0">
+                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
+                            fontIcon="edit"></mat-icon>
+                            <div class="text-wrap">
+                                <small class="ms-2"> Pour modifier l'élément du tableau </small>
+                            </div>
+                        </mat-list-item>
+                        <mat-list-item class="d-flex pe-0">
+                            <mat-icon matListItemIcon class="info-content-ico mx-0 p-1 bg-dark text-white rounded-circle"
+                            fontIcon="delete"></mat-icon>
+                            <div class="text-wrap">
+                                <small class="ms-2"> Pour supprimer l'élément du tableau </small>
+                            </div>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </mat-menu>
+
+            <mat-card-content>
+                <div class="table-responsive mx-n1 px-1">
+                    <table class="table table-bordered table-sm border-top border-translucent fs-9 mb-0">
+                        <thead>
+                            <tr>
+                                <th class="white-space-nowrap ps-2 fs-9 align-middle ps-0"
+                                style="max-width: max-content; width: max-content;">
+                                    <div class="form-check mb-0 fs-8">
+                                        <input class="form-check-input" id="bulk-select-example" type="checkbox">
+                                    </div>
+                                </th>
+                                <th class="sort align-middle ps-3 fst-italic">#ID</th>
+                                <th class="sort align-middle ps-3">Libellé</th>
+                                <th class="sort align-middle ps-3">Date</th>
+                                <th class="sort text-center align-middle pe-0" scope="col">ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody class="" id="bulk-select-body">
+
+                            @for (item of list_arbitrage | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                                <tr>
+                                    <td class="white-space-nowrap ps-2 fs-9 align-middle ps-0">
+                                        <div class="form-check mb-0 text-center fs-8">
+                                            <input class="form-check-input" type="checkbox">
+                                        </div>
+                                    </td>
+                                    <td class="align-middle email text__theme__dark__p">{{ $index+1 }}</td>
+                                    <td class="align-middle text-center text__theme__dark__p">{{ item.libelle }}</td>
+                                    <td class="align-middle text-center text__theme__dark__p">{{ item.created_at | date: 'dd/MM/yyyy' }}</td>
+                                    <td class="align-middle white-space-nowrap text-center pe-0">
+                                        <button [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
+                                            <mat-icon class="text__theme">more_horiz</mat-icon>
+                                        </button>
+                                        <mat-menu class="mat__custumer__card__bg" #menuAction="matMenu" xPosition="before">
+                                            <li mat-menu-item class="action__mat__list__item">
+                                                <button (click)="showDetails(item)" mat-button class="action__mat__list__item__button">
+                                                    <mat-icon class="text__theme">visibility</mat-icon> <span class="ms-2 text__theme">Afficher</span>
+                                                </button>
+                                            </li>
+                                            <li mat-menu-item class="action__mat__list__item">
+                                                <button (click)="joinDocument(item)" mat-button class="action__mat__list__item__button">
+                                                    <mat-icon class="text__theme">join_left</mat-icon> <span class="ms-2 text__theme">Joindre document</span>
+                                                </button>
+                                            </li>
+                                            <li mat-menu-item class="action__mat__list__item">
+                                                <button (click)="editCurrentItem(item)" mat-button class="action__mat__list__item__button">
+                                                    <mat-icon class="text__theme">edit</mat-icon> <span class="ms-2 text__theme">Modifier</span>
+                                                </button>
+                                            </li>
+                                            <li mat-menu-item class="action__mat__list__item">
+                                                <button (click)="delete(item.slug)" mat-button class="action__mat__list__item__button">
+                                                    <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
+                                                </button>
+                                            </li>
+                                        </mat-menu>
+                                    </td>
+                                </tr>
+                            }@empty {
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        <mat-card class="shadow-none mat__custumer__card__bg">
+                                            <mat-card-content>
+                                                <svg width="50px" height="50px" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M18.364 18.364C19.9926 16.7353 21 14.4853 21 12C21 7.02944 16.9706 3 12 3C9.51472 3 7.26472 4.00736 5.63604 5.63604M18.364 18.364C16.7353 19.9926 14.4853 21 12 21C7.02944 21 3 16.9706 3 12C3 9.51472 4.00736 7.26472 5.63604 5.63604M18.364 18.364L5.63604 5.63604"
+                                                    stroke="#fb3b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                </svg>
+                                                <span class="text-danger fw-bolder">Aucun élément trouvé</span>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                @if(list_arbitrage.length > 0){
+                    <div class="text-end mt-3">
+                        <pagination-controls
+                        [responsive]="true"
+                        previousLabel="Précédent"
+                        nextLabel="Suivant"
+                        (pageChange)="p = $event"></pagination-controls>
+                    </div>
+                }
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

@@ -12,9 +12,6 @@ import {
   AdminAccountsComponent,
 } from '../../pages/admin-pages/admin-accounts/admin-accounts.component';
 import {
-  ArbitrageUsComponent,
-} from '../../pages/admin-pages/arbitrage-us/arbitrage-us.component';
-import {
   BannerUsComponent,
 } from '../../pages/admin-pages/banner-us/banner-us.component';
 import {
@@ -26,6 +23,18 @@ import {
 import {
   HistoriqueUsComponent,
 } from '../../pages/admin-pages/historique-us/historique-us.component';
+import {
+  CalculateurFraisComponent,
+} from '../../pages/admin-pages/info-pratique/calculateur-frais/calculateur-frais.component';
+import {
+  DevenirArbitreComponent,
+} from '../../pages/admin-pages/info-pratique/devenir-arbitre/devenir-arbitre.component';
+import {
+  FaqComponent,
+} from '../../pages/admin-pages/info-pratique/faq/faq.component';
+import {
+  SoumettreDocsComponent,
+} from '../../pages/admin-pages/info-pratique/soumettre-docs/soumettre-docs.component';
 import {
   MessagerieComponent,
 } from '../../pages/admin-pages/messagerie/messagerie.component';
@@ -185,15 +194,6 @@ const routes: Routes = [
 
 // _-__--__ 🥝🥝 SERVICES ROUTES 🥝
     {
-        path: 'web-admin.service-arbitrage',
-        component: ArbitrageUsComponent,
-        data: { title: 'ARBITRAGE' },
-        resolve: {
-            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
-        },
-        canActivate: [authGuard],
-    },
-    {
         path: 'web-admin.type-services',
         component: TypeServicesComponent,
         data: { title: 'TYPES SERVICES' },
@@ -203,7 +203,7 @@ const routes: Routes = [
         canActivate: [authGuard],
     },
     {
-        path: 'web-admin.service/:type_service_code',
+        path: 'web-admin.service/:type_service_code/:type_service',
         component: ServicesComponent,
         data: { title: 'SERVICES | ' },
         resolve: {
@@ -227,6 +227,45 @@ const routes: Routes = [
         path: 'web-admin.news-event',
         component: EventsUsComponent,
         data: { title: 'ACTUALITÉS' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+// _-__--__ 🥝🥝
+
+// _-__--__ 🥝🥝 INFORMATIONS PRATIQUES ROUTES 🥝
+    {
+        path: 'web-admin.informations-pratiques-guide',
+        component: SoumettreDocsComponent,
+        data: { title: 'SOMETTRE UN DOSSIER' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+    {
+        path: 'web-admin.informations-pratiques-calculateur-frais',
+        component: CalculateurFraisComponent,
+        data: { title: 'CALCULATEURS DE FRAIS' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+    {
+        path: 'web-admin.informations-pratiques-comment-devenir',
+        component: DevenirArbitreComponent,
+        data: { title: 'COMMENT DEVENIR ARBITRE, MEDIATEUR, EXPERT' },
+        resolve: {
+            layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
+        },
+        canActivate: [authGuard],
+    },
+    {
+        path: 'web-admin.informations-pratiques-faq',
+        component: FaqComponent,
+        data: { title: 'Faq' },
         resolve: {
             layout: () => import('../admin-layout/admin-layout.module').then(() => AdminLayoutComponent)
         },

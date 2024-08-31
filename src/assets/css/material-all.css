@@ -53534,3 +53534,11 @@ mat-form-field input[readonly]{
         width: 28% !important;
     }
 }
+
+.mat-datepicker-content .mat-datepicker-close-button {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    display: none !important;
+}

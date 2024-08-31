@@ -48,12 +48,17 @@ export class CuTypeServicesComponent implements OnInit, OnDestroy {
     public form_type: any = '';
     public forms: FormGroup = new FormGroup<{
         type_service: FormControl<string | null>
+        description: FormControl<string | null>
     }>(
         {
             type_service: new FormControl('', [
                 Validators.required,
                 Validators.minLength(4),
                 Validators.pattern('^[a-zA-Z0-9_.àâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ-]*$')
+            ]),
+            description: new FormControl('', [
+                Validators.required,
+                Validators.minLength(4)
             ])
         }
     );
@@ -75,7 +80,8 @@ export class CuTypeServicesComponent implements OnInit, OnDestroy {
                 this.form_type = this.data.type;
                 const data = this.data.content;
                 this.forms.setValue({
-                    type_service: data.type_service
+                    type_service: data.type_service,
+                    description: data.description
                 });
             }
         }
@@ -89,6 +95,7 @@ export class CuTypeServicesComponent implements OnInit, OnDestroy {
         const data: any = {
             author_id: this._ls.getDataToStorage()?.id,
             type_service: this.forms.get('type_service')?.value,
+            description: this.forms.get('description')?.value,
         }
         this.unscribe.add(
             this._request.add(data).subscribe(
@@ -116,6 +123,7 @@ export class CuTypeServicesComponent implements OnInit, OnDestroy {
         const data: any = {
             author_id: this._ls.getDataToStorage()?.id,
             type_service: this.forms.get('type_service')?.value,
+            description: this.forms.get('description')?.value,
         }
         this.unscribe.add(
             this._request.update(data, this.data.content.slug).subscribe(

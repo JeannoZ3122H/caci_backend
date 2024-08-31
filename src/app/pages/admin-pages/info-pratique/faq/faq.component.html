@@ -7,25 +7,8 @@
                 <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 6L21 6.00066M10 12L21 12.0007M10 18L21 18.0007M3 5L5 4V10M5 10H3M5 10H7M7 20H3L6.41274 17.0139C6.78593 16.6873 7 16.2156 7 15.7197C7 14.7699 6.23008 14 5.28033 14H5C4.06808 14 3.28503 14.6374 3.06301 15.5" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Liste des Types services
+                Liste des questions
             </h2>
-        </div>
-        <div id="bulk-select-replace-element" class>
-            <button (click)="add()" mat-fab extended color="primary" class="btn btn-phoenix-success btn-sm" type="button">
-                <svg class="svg-inline--fa fa-plus" type_event="img"
-                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                    style="transform-origin: 0.4375em 0.625em;">
-                    <g transform="translate(224 256)">
-                        <g transform="translate(0, 64)  scale(0.8125, 0.8125)  rotate(0 0 0)">
-                            <path fill="currentColor"
-                                d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"
-                                transform="translate(-224 -256)">
-                            </path>
-                        </g>
-                    </g>
-                </svg>
-                <span class="ms-1">Ajouter</span>
-            </button>
         </div>
     </div>
 
@@ -63,7 +46,6 @@
                     </mat-list>
                 </div>
             </mat-menu>
-
             <mat-card-content>
                 <div class="table-responsive mx-n1 px-1">
                     <table class="table table-bordered table-sm border-top border-translucent fs-9 mb-0">
@@ -75,14 +57,15 @@
                                     </div>
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="name">#ID</th>
-                                <th class="sort align-middle text-center" data-sort="email">Type service</th>
-                                <th class="sort align-middle text-center" data-sort="description">Description</th>
+                                <th class="sort align-middle text-center" data-sort="ask">Question</th>
+                                <th class="sort align-middle text-center" data-sort="answere">Reponse</th>
+                                <th class="sort align-middle text-center" data-sort="keyword">Mot clé</th>
                                 <th class="sort text-center align-middle pe-0" scope="col">ACTION</th>
                             </tr>
                         </thead>
                         <tbody class="" id="bulk-select-body">
 
-                            @for (type_service of list_type_service | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                            @for (faq of list_faq | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
                                 <tr>
                                     <td class="fs-9 align-middle ps-2">
                                         <div class="form-check mb-0 fs-8">
@@ -90,19 +73,22 @@
                                         </div>
                                     </td>
                                     <td class="align-middle ps-3 name">{{ $index+1 }}</td>
-                                    <td class="align-middle ps-3 name text-center text-wrap">{{ type_service.type_service }}</td>
-                                    <td class="align-middle ps-3 name text-start text-wrap">{{ type_service.description }}</td>
+                                    <td class="align-middle ps-3 name text-center">{{ faq.ask }}</td>
+                                    <td class="align-middle ps-3 name text-start text-wrap">{{ faq.answere?faq.answere:'Aucune reponse' }}</td>
+                                    <td class="align-middle ps-3 name text-center">
+                                        {{ faq.keyword }}
+                                    </td>
                                     <td class="align-middle white-space-nowrap text-center pe-0">
                                         <button [matMenuTriggerFor]="menuAction" mat-mini-fab color="default">
                                             <mat-icon class="text__theme">more_horiz</mat-icon>
                                         </button>
                                         <mat-menu #menuAction="matMenu" xPosition="before">
                                             <li mat-menu-item class="action__mat__list__item">
-                                                <button (click)="edit(type_service)" mat-button class="action__mat__list__item__button">
+                                                <button (click)="edit(faq)" mat-button class="action__mat__list__item__button">
                                                     <mat-icon class="text__theme">edit</mat-icon> <span class="ms-2 text__theme">Modifier</span>
                                                 </button>
                                             </li>
-                                            <li mat-menu-item (click)="delete(type_service.slug)" class="action__mat__list__item">
+                                            <li mat-menu-item (click)="delete(faq.slug)" class="action__mat__list__item">
                                                 <button mat-button class="action__mat__list__item__button">
                                                     <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
                                                 </button>
@@ -129,7 +115,7 @@
                         </tbody>
                     </table>
                 </div>
-                @if(list_type_service.length > 0){
+                @if(list_faq.length > 0){
                     <div class="text-end mt-3">
                         <pagination-controls
                         [responsive]="true"

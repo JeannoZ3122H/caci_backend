@@ -25,7 +25,7 @@
                                 Informations
                             </ng-template>
                             <ng-container>
-                                <div class="row justify-content-between mt-2">
+                                <div class="row justify-content-between mt-3">
                                     <div class="col-lg-12 col-12">
                                         <mat-form-field appearance="outline">
                                             <mat-label class="text__theme__dark__p">Entrer le titre de l'évènement</mat-label>
@@ -47,6 +47,24 @@
                                             <mat-icon matSuffix>edit_note</mat-icon>
                                         </mat-form-field>
                                     </div>
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Entrer l'url de google Forms</mat-label>
+                                            <input class="text__theme__dark__p" formControlName="google_meet_url" type="url" matInput placeholder="Entrer ici...">
+                                            <mat-icon matSuffix>edit_note</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-12 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label class="text__theme__dark__p">Seletionnez le type d'évènement</mat-label>
+                                            <mat-select class="text__theme__dark__p" formControlName="type_event_id">
+                                                <mat-option selected>Seletionnez le type d'évènement</mat-option>
+                                                <mat-option *ngFor="let type_event of list_type_events" [value]="type_event.id">
+                                                    {{ type_event.type_event }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
                                     <div class="col-lg-12 mb-3 text-center col-12">
                                         <mat-radio-group formControlName="status_enter_event"
                                             aria-label="Selectionner un statut d'entrée">
@@ -54,7 +72,7 @@
                                             <mat-radio-button mat-raised-button color="primary" [value]="false">Payant</mat-radio-button>
                                         </mat-radio-group>
                                     </div>
-                                    @if(forms.get('status_enter_event')?.value == false){
+                                    @if(forms.get('status_enter_event')?.value == 0){
                                         <div class="col-lg-12 col-12">
                                             <mat-form-field appearance="outline">
                                                 <mat-label class="text__theme__dark__p">Entrer le montant d'entrée</mat-label>
@@ -98,28 +116,73 @@
                         <mat-tab label="Third">
                             <ng-template mat-tab-label>
                                 <mat-icon class="example-tab-icon me-2">looks_3</mat-icon>
+                                Programmer une période
+                            </ng-template>
+                            <ng-container>
+                                <div class="row justify-content-between mt-2 mb-3">
+                                    <div class="col-lg-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Choisissez la date de début</mat-label>
+                                            <input formControlName="date_start_event" (click)="pickerStart.open()" matInput [matDatepicker]="pickerStart">
+                                            <mat-datepicker-toggle matIconSuffix [for]="pickerStart"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerStart></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Choisissez la date de fin</mat-label>
+                                            <input formControlName="date_end_event" (click)="pickerEnd.open()" matInput [matDatepicker]="pickerEnd">
+                                            <mat-datepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+                                            <mat-datepicker #pickerEnd></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <!-- <mat-form-field appearance="outline"> -->
+                                            <mat-label>Choisissez une heure de début</mat-label>
+                                            <input matInput hidden [format]="24" formControlName="hours_start_event"
+                                            [ngxMatTimepicker]="pickerFn" placeholder="00:00" readonly />
+                                            <ngx-mat-timepicker-toggle></ngx-mat-timepicker-toggle>
+                                        <!-- </mat-form-field> -->
+                                        <button mat-raised-button (click)="pickerFn.open()" color="primary"
+                                        class="ngx-mtp-margin-top ms-2 ngx-mtp-margin-bottom ngx-mtp-d-inline-block">
+                                            Ouvrir l'horloge
+                                        </button>
+                                        <ngx-mat-timepicker color="accent" #pickerFn></ngx-mat-timepicker>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <!-- <mat-form-field appearance="outline"> -->
+                                            <mat-label>Choisissez heure de fin</mat-label>
+                                            <input matInput hidden [format]="24" formControlName="hours_end_event"
+                                            [ngxMatTimepicker]="pickerFx" placeholder="00:00" readonly />
+                                            <ngx-mat-timepicker-toggle></ngx-mat-timepicker-toggle>
+                                        <!-- </mat-form-field> -->
+                                        <button mat-raised-button (click)="pickerFx.open()" color="warn"
+                                        class="ngx-mtp-margin-top ms-2 ngx-mtp-margin-bottom ngx-mtp-d-inline-block">
+                                            Ouvrir l'horloge
+                                        </button>
+                                        <ngx-mat-timepicker color="accent" #pickerFx></ngx-mat-timepicker>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </mat-tab>
+                        <mat-tab label="Four">
+                            <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon me-2">looks_4</mat-icon>
                                 Description
                             </ng-template>
                             <ng-container>
-                                <div class="row justify-content-between mt-2">
+                                <div class="row justify-content-between mt-2 mb-3">
                                     <div class="col-lg-12 col-12">
-                                        <!-- <mat-form-field>
-                                            <input [ngxTimepicker]="picker">
-                                            <ngx-material-timepicker #picker></ngx-material-timepicker>
-                                        </mat-form-field> -->
-                                    </div>
-                                </div>
-                                    <!-- <div class="col-lg-12 col-12"> -->
-                                        <div class="NgxEditor__Wrapper" style="max-height: 100%; height: 400px">
+                                        <div class="NgxEditor__Wrapper"
+                                        [style]="forms.get('description_event')?.value == ''?'max-height: 100%; height: 400px':'max-height: auto; height: auto'">
                                             <ngx-editor-menu [toolbar]="toolbar"
                                             [colorPresets]="colorPresets" [editor]="editor"> </ngx-editor-menu>
-                                            <ngx-editor
-                                                [editor]="editor"
-                                                formControlName="description_event"
+                                            <ngx-editor [editor]="editor" formControlName="description_event"
                                                 [placeholder]="'Entrer la description ici...'"
                                             ></ngx-editor>
                                         </div>
-                                    <!-- </div> -->
+                                    </div>
+                                </div>
                             </ng-container>
                         </mat-tab>
                     </mat-tab-group>

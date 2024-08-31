@@ -1,0 +1,201 @@
+<div class="text-end mat__custumer__container__bg">
+    <button class="mat__btn__closing" mat-mini-fab [mat-dialog-close]="'cancel'" [color]="show_content == 'edit'?'warn':'primary'">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+<div class="text-center px-0 mat__custumer__container__bg" style="height: auto !important" >
+    <mat-divider></mat-divider>
+    <div class="text-center py-2 px-3">
+        <h2 *ngIf="show_content != 'init'" class="text-uppercase mb-0 fw-bolder text-dark">
+            {{ show_content == 'add'?'Joindre des documents':'Modifier les documents joins à ce contenu' }}
+        </h2>
+        <p *ngIf="is_old_upload" class="text-center">
+            <b>NB:</b> Veuillez continuer si vous vouez joindres d'autres documents.
+        </p>
+        <h2 *ngIf="show_content == 'init'" class="text-uppercase mb-0 fw-bolder text-dark">
+            Veuillez choisir une action pour continuer
+        </h2>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+
+<div mat-dialog-content class="px-1 py-2 mat__custumer__container__bg">
+    <mat-card class="mat__custumer__card__bg py-3">
+
+        @if(show_content == 'init'){
+            <div class="container row justify-content-center">
+                <div class="col-lg-6 col-10 row justify-content-between">
+                    <div class="col-lg-5 col-12">
+                        <mat-card [class]="show_content == 'add'?'border border-2 border-primary':''" (click)="changeContent('add')" style="cursor: pointer">
+                            <mat-card-content>
+                                <p class="text-center fw-bolder">
+                                    Voulez-vous joindre des documents à ce contenu
+                                </p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-lg-1 col-12 d-flex">
+                        <b class="m-auto">Ou</b>
+                    </div>
+                    <div class="col-lg-5 col-12">
+                        <mat-card [class]="show_content == 'edit'?'border border-2 border-primary':''" (click)="changeContent('edit')" style="cursor: pointer">
+                            <mat-card-content>
+                                <p class="text-center fw-bolder">
+                                    Voulez-vous modifier les documents à ce contenu
+                                </p>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if(show_content == 'add'){
+            <form [formGroup]="forms" (ngSubmit)="add()">
+                <mat-card-content>
+                    <div class="row justify-content-between mt-2">
+                        <div class="col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label class="text__theme__dark__p">Entrer un grand titre pour tous les documents</mat-label>
+                                <input class="text__theme__dark__p" matInput formControlName="title" type="text" placeholder="Veuillez entrer ici...">
+                                <mat-icon matSuffix>edit_not</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label class="text__theme__dark__p">Entrer le libellé du document</mat-label>
+                                <input class="text__theme__dark__p" matInput formControlName="libelle_document" type="text" placeholder="Veuillez entrer ici...">
+                                <mat-icon matSuffix>control_point_duplicate</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="mb-3">
+                                <input (change)="onChange($event)" class="text__theme__dark__p form-control form-control-lg" type="file" id="formFile">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button [disabled]="forms.invalid" mat-fab extended color="primary">
+                            <mat-icon>save</mat-icon>
+                            Enregistrer
+                        </button>
+                    </div>
+                </mat-card-content>
+            </form>
+        }
+        @if(show_content == 'edit'){
+            @if(!item_data){
+                <mat-card-content>
+                    <div class="row justify-content-center mt-2">
+                        <div class="col-6">
+                            <mat-card class="mat__custumer__container__bg">
+                                <mat-card-content>
+                                    <div class="table-responsive mx-n1 px-1">
+                                        <table class="table table-bordered table-sm border-top border-translucent fs-9 mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sort align-middle ps-3 fst-italic">#ID</th>
+                                                    <th class="sort align-middle ps-3">Libellé</th>
+                                                    <th class="sort align-middle ps-3">Redirection</th>
+                                                    <th class="sort text-center align-middle pe-0" scope="col">ACTION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="" id="bulk-select-body">
+                                                @defer{
+                                                    @for (document_join of list_document_joins | paginate: { itemsPerPage: 10, currentPage: p }; track $index) {
+                                                        <tr>
+                                                            <td class="align-middle email text__theme__dark__p">{{ $index+1 }}</td>
+                                                            <td class="align-middle ps-3 name text-start text-wrap">{{ document_join.libelle_document }}</td>
+                                                            <td class="align-middle ps-3 name">
+                                                                @if (document_join.illustration) {
+                                                                    <a [href]="document_join.illustration" target="_blank" mat-raised-button>Aller vers</a>
+                                                                }@else{Aucune illustration}
+                                                            </td>
+                                                            <td class="align-middle white-space-nowrap text-center pe-0">
+                                                                <button (click)="editItem(document_join)" mat-button class="action__mat__list__item__button">
+                                                                    <mat-icon class="text__theme">edit</mat-icon> <span class="ms-2 text__theme">Modifier</span>
+                                                                </button>
+                                                                <button (click)="delete(document_join.slug)" mat-button color="warn" class="action__mat__list__item__button">
+                                                                    <mat-icon class="text__theme">delete</mat-icon> <span class="ms-2 text__theme">Supprimer</span>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    }@empty {
+                                                        <tr>
+                                                            <td colspan="8" class="text-center">
+                                                                <mat-card class="shadow-none mat__custumer__card__bg">
+                                                                    <mat-card-content>
+                                                                        <svg width="50px" height="50px" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                                                                            <path d="M18.364 18.364C19.9926 16.7353 21 14.4853 21 12C21 7.02944 16.9706 3 12 3C9.51472 3 7.26472 4.00736 5.63604 5.63604M18.364 18.364C16.7353 19.9926 14.4853 21 12 21C7.02944 21 3 16.9706 3 12C3 9.51472 4.00736 7.26472 5.63604 5.63604M18.364 18.364L5.63604 5.63604"
+                                                                            stroke="#fb3b1e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                                        </svg>
+                                                                        <span class="text-danger fw-bolder">Aucun élément trouvé</span>
+                                                                    </mat-card-content>
+                                                                </mat-card>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }@placeholder{
+                                                    <tr>
+                                                        <td colspan="8" class="text-center">
+                                                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    @if(list_document_joins.length > 0){
+                                        <div class="text-end mt-3">
+                                            <pagination-controls
+                                            [responsive]="true"
+                                            previousLabel="Précédent"
+                                            nextLabel="Suivant"
+                                            (pageChange)="p = $event"></pagination-controls>
+                                        </div>
+                                    }
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="text-center">
+
+                    </div>
+                </mat-card-content>
+            }@else{
+                <form [formGroup]="forms" (ngSubmit)="edit()">
+                    <mat-card-content>
+                        <div class="row justify-content-between mt-2">
+                            <div class="col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="text__theme__dark__p">Entrer un grand titre pour tous les documents</mat-label>
+                                    <input class="text__theme__dark__p" matInput formControlName="title" type="text" placeholder="Veuillez entrer ici...">
+                                    <mat-icon matSuffix>edit_not</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <mat-form-field appearance="outline">
+                                    <mat-label class="text__theme__dark__p">Entrer le libellé du document</mat-label>
+                                    <input class="text__theme__dark__p" matInput formControlName="libelle_document" type="text" placeholder="Veuillez entrer ici...">
+                                    <mat-icon matSuffix>control_point_duplicate</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-lg-6 col-12">
+                                <div class="mb-3">
+                                    <input (change)="onChange($event)" class="text__theme__dark__p form-control form-control-lg" type="file" id="formFile">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button [disabled]="forms.invalid" mat-fab extended color="primary">
+                                <mat-icon>save</mat-icon>
+                                Enregistrer
+                            </button>
+                        </div>
+                    </mat-card-content>
+                </form>
+            }
+        }
+    </mat-card>
+</div>

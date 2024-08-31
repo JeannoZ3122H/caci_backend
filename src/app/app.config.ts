@@ -30,6 +30,7 @@ import {
 import {
   NGX_MAT_DATE_FORMATS,
   NgxMatDateFormats,
+  NgxMatTimepickerModule,
 } from '@angular-material-components/datetime-picker';
 import {
   TranslateLoader,
@@ -168,6 +169,7 @@ export const appConfig: ApplicationConfig = {
                 },
             }),
             BrowserAnimationsModule,
+            NgxMatTimepickerModule
         ),
         provideToastr({
             timeOut: 1000,
