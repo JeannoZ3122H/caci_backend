@@ -1,8 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
+import { NgxCaptchaModule } from 'ngx-captcha';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MaterialModule } from 'src/app/material-module';
 import { AuthComponent } from 'src/app/pages/auth/auth.component';
@@ -20,8 +24,9 @@ import {
     RouterModule.forChild(AuthentificationLayoutRoutes),
     FormsModule,
     MaterialModule,
-
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxCaptchaModule,
+    ReactiveFormsModule
   ]
 })
 export class AuthentificationLayoutModule { }

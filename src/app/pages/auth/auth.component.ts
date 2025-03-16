@@ -2,6 +2,11 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -39,6 +44,11 @@ export class AuthComponent implements OnInit{
     public is_old_connected: boolean = false;
 
     public data_for_any_user: any;
+    protected aFormGroup!: FormGroup;
+    // var recaptcha
+    public siteKey: string = '6LfLZBAqAAAAAH1nS8VjmTr1hiK9yRmcBLjLfxFo';
+    public token: string = '6LfLZBAqAAAAALQDUiqwHuxKiawRpsT3pmx8UzJP';
+
 
     constructor (
         private _message: MessageService,
@@ -50,6 +60,7 @@ export class AuthComponent implements OnInit{
         private _coockie: CustomerCookieService,
         private _localStorage: CustomerStorageService,
         private _coockieService: CookieService,
+        private formBuilder: FormBuilder
     ){}
 
     ngOnInit() {
@@ -58,6 +69,12 @@ export class AuthComponent implements OnInit{
             this.get_email = get_email;
            this.userOldConnected();
         }
+
+        this.aFormGroup = this.formBuilder.group({
+            email: ['', Validators.required],
+            password: ['', Validators.required],
+            recaptcha: ['', Validators.required]
+        });
     }
 
     viewPassword(){
@@ -210,6 +227,24 @@ export class AuthComponent implements OnInit{
         setTimeout(() => {
             this._router.navigateByUrl('/web.forgot-password')
         }, 500);
+    }
+
+// 🫧 RECAPTCHA V2
+    //
+    handleReset(){
+
+    }
+    //
+    handleExpire(){
+
+    }
+    //
+    handleLoad(){
+
+    }
+    //
+    handleSuccess(e: any){
+
     }
 
     // auto logOut
